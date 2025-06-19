@@ -7,13 +7,19 @@ export type User = {
 };
 
 export type LoginUserArgs = {
-	database: Database;
-	login: string;
-	password: string;
+        database: Database;
+        login: string;
+        password: string;
+};
+
+export type RegisterUserArgs = {
+       database: Database;
+       login: string;
+       password: string;
 };
 
 export async function loginUser(args: LoginUserArgs) {
-	const { database, login, password } = args;
+        const { database, login, password } = args;
 
 	const user = await database.users.findOne({ user: login });
 	if (!user) {
@@ -25,7 +31,19 @@ export async function loginUser(args: LoginUserArgs) {
 		return null;
 	}
 
-	return user._id.toString();
+        return user._id.toString();
+}
+
+export async function registerUser(args: RegisterUserArgs) {
+       const { database, login, password } = args;
+
+       const existing = await database.users.findOne({ user: login });
+       if (existing) {
+               return null;
+       }
+
+       const result = await database.users.insertOne({ user: login, password });
+       return result.insertedId.toString();
 }
 
 export type GetUserArgs = {
