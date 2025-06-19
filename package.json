@@ -3,7 +3,8 @@
 	"scripts": {
 		"format": "biome format --write; biome lint --write",
 		"dev": "bun run --filter '*' dev",
-		"client:dev": "bun run --filter './packages/client' dev"
+		"client:dev": "bun run --filter './packages/client' dev",
+		"server:dev": "bun run --filter './packages/server' dev"
 	},
 	"workspaces": [
 		"packages/*"
