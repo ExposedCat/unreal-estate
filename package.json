@@ -3,6 +3,7 @@
 	"scripts": {
 		"format": "biome format --no-errors-on-unmatched; biome lint --no-errors-on-unmatched",
 		"format:fix": "biome format --write; biome lint --write",
+		"typecheck": "bun run --filter '*' typecheck",
 		"dev": "bun run --filter '*' dev",
 		"client:dev": "bun run --filter './packages/client' dev",
 		"server:dev": "bun run --filter './packages/server' dev",
