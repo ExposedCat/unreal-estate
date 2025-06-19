@@ -1,6 +1,6 @@
 import { type Static, Type } from "@sinclair/typebox";
 import { AuthResponseSchema } from "../auth";
-import { ErrorResponseSchema, SuccessResponseSchema } from "../common";
+import { ErrorResponseSchema } from "../common";
 
 export const RegisterRequestSchema = Type.Object({
 	email: Type.String({ format: "email" }),
