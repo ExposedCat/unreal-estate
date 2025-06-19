@@ -13,13 +13,16 @@
 		"@biomejs/biome": "^2.0.0",
 		"@chakra-ui/react": "^3.21.0",
 		"@emotion/react": "^11.14.0",
+		"@tanstack/react-router": "^1.121.27",
 		"next-themes": "^0.4.6",
+		"pronajemik-common": "workspace:*",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
-		"react-icons": "^5.5.0",
-		"pronajemik-common": "workspace:*"
+		"react-icons": "^5.5.0"
 	},
 	"devDependencies": {
+		"@tanstack/router-devtools": "^1.121.27",
+		"@tanstack/router-vite-plugin": "^1.121.27",
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",
 		"@vitejs/plugin-react": "^4.4.1",

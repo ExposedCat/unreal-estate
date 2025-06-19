@@ -4,5 +4,8 @@
 	"main": "index.ts",
 	"scripts": {
 		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@sinclair/typebox": "^0.34.35"
 	}
 }
