@@ -10,7 +10,7 @@ export async function createDbConnection(connectionString: string) {
 	const client = new MongoClient(connectionString);
 	await client.connect();
 
-	const mongoDb = client.db(process.env.DATABASE_NAME ?? "unreal-estate");
+	const mongoDb = client.db(process.env.DATABASE_NAME ?? "pronajemik");
 	const users = mongoDb.collection<User>("users");
 
 	const database: Database = { users };

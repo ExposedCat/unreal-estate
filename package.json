@@ -1,5 +1,5 @@
 {
-	"name": "unreal-estate",
+	"name": "pronajemik",
 	"scripts": {
 		"format": "biome format --write; biome lint --write",
 		"dev": "bun run --filter '*' dev",

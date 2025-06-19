@@ -14,5 +14,5 @@ const app = new Elysia()
 	.listen(process.env.PORT || 8080);
 
 console.log(
-	`🏠 Unreal Estate API is running at http://${app.server?.hostname}:${app.server?.port}`,
+	`🏠 Pronajemik API is running at http://${app.server?.hostname}:${app.server?.port}`,
 );

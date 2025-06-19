@@ -1,5 +1,5 @@
 import { Button, Heading, Text, VStack } from "@chakra-ui/react";
-import { TEST } from "unreal-estate-common";
+import { TEST } from "pronajemik-common";
 
 export const App = () => {
 	return (
