@@ -37,7 +37,12 @@ bun run typecheck
 
 ### Pre-commit Hooks
 
-This project uses Husky for pre-commit hooks that automatically check formatting before commits.
+This project uses Husky for pre-commit hooks that automatically run before each commit:
+
+1. **Auto-fix formatting**: Runs `bun run format:fix` to automatically fix any formatting issues
+2. **Type checking**: Runs `bun run typecheck` to ensure all TypeScript code is type-safe
+
+If type checking fails, the commit will be blocked until the issues are resolved.
 
 ## Continuous Integration
 
