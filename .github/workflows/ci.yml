@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+    name: Code Quality Check
+    outputs:
+      cache-hit: ${{ steps.cache-deps.outputs.cache-hit }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+
+    - name: Cache Bun dependencies
+      id: cache-deps
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.bun/install/cache
+          node_modules
+          packages/*/node_modules
+        key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+        restore-keys: |
+          ${{ runner.os }}-bun-
+
+    - name: Cache TypeScript build info
+      uses: actions/cache@v4
+      with:
+        path: |
+          packages/*/tsconfig.tsbuildinfo
+          packages/*/node_modules/.tmp
+        key: ${{ runner.os }}-tsc-${{ hashFiles('**/tsconfig*.json') }}-${{ hashFiles('**/*.ts', '**/*.tsx') }}
+        restore-keys: |
+          ${{ runner.os }}-tsc-${{ hashFiles('**/tsconfig*.json') }}-
+          ${{ runner.os }}-tsc-
+
+    - name: Install dependencies
+      run: bun install --frozen-lockfile
+
+    - name: Check formatting and linting
+      run: |
+        echo "🔍 Checking code formatting and linting..."
+        bun run format
+
+    - name: Verify no formatting changes needed
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "❌ Code formatting or linting issues found!"
+          echo "Please run 'bun run format:fix' locally to fix these issues:"
+          echo ""
+          git status --porcelain
+          echo ""
+          echo "Diff:"
+          git diff
+          exit 1
+        else
+          echo "✅ All files are properly formatted and linted!"
+        fi
+
+    - name: Run type checking
+      run: |
+        echo "🔍 Running TypeScript type checking..."
+        bun run typecheck
+        echo "✅ All type checks passed!"
+
+  build-check:
+    runs-on: ubuntu-latest
+    name: Build Verification
+    needs: quality-check
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v1
+      with:
+        bun-version: latest
+
+    - name: Restore Bun dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.bun/install/cache
+          node_modules
+          packages/*/node_modules
+        key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+        restore-keys: |
+          ${{ runner.os }}-bun-
+
+    - name: Install dependencies
+      run: bun install --frozen-lockfile
+
+    - name: Build client
+      run: |
+        echo "🔍 Building client package..."
+        bun run --filter './packages/client' build
+        echo "✅ Client build successful!"
+
+    - name: Verify server compiles
+      run: |
+        echo "🔍 Verifying server compiles..."
+        bun build packages/server/src/index.ts --outdir packages/server/dist --target bun
+        echo "✅ Server compilation successful!"
