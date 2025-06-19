@@ -1,6 +1,6 @@
 import { Elysia } from "elysia";
-import { failure } from "../services/response";
-import { getUser } from "../services/user";
+import { failure } from "pronajemik-common";
+import { getUser } from "../services/user/get.js";
 import { RequireBase } from "./base.js";
 
 export const RequireAuth = new Elysia({ name: "Middleware.Auth" })
