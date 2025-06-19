@@ -1,0 +1,15 @@
+{
+	"name": "pronajemik-server",
+	"version": "0.0.0",
+	"scripts": {
+		"dev": "bun run --watch src/index.ts"
+	},
+	"dependencies": {
+		"elysia": "latest",
+		"pronajemik-common": "workspace:*"
+	},
+	"devDependencies": {
+		"bun-types": "latest"
+	},
+	"module": "src/index.js"
+}

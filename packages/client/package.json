@@ -1,5 +1,5 @@
 {
-	"name": "unreal-estate-client",
+	"name": "pronajemik-client",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
@@ -16,7 +16,7 @@
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
 		"react-icons": "^5.5.0",
-		"unreal-estate-common": "workspace:*"
+		"pronajemik-common": "workspace:*"
 	},
 	"devDependencies": {
 		"@types/react": "^19.1.2",
