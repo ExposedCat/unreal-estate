@@ -14,9 +14,10 @@ export const RequireAuth = new Elysia({ name: "Middleware.Auth" })
 		if (!data) {
 			throw new Error("Unauthorized", { cause: failure("Unauthorized") });
 		}
-		const user = await getUser({ database, userId: data.userId });
-		if (!user) {
+		const response = await getUser({ database, userId: data.userId });
+		if (!response.ok) {
 			throw new Error("Unauthorized", { cause: failure("Unauthorized") });
 		}
-		return { user };
-	});
+		return { user: response.data };
+	})
+	.as("scoped");
