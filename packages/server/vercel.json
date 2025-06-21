@@ -1,0 +1,12 @@
+{
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"buildCommand": "bun install && bun run prevercel",
+	"installCommand": "bun install && bun run prevercel",
+	"relatedProjects": ["prj_sHRfxp00EFsMojO1W8Ywlx4JFuKh"],
+	"outputDirectory": "api",
+	"functions": {
+		"api/index.ts": {
+			"runtime": "@godsreveal/vercel-bun@0.2.4"
+		}
+	}
+}
