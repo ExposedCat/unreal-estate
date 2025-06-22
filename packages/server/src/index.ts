@@ -21,4 +21,4 @@ if (!process.env.VERCEL) {
 	);
 }
 
-export default app.handle;
+export default app.fetch;
