@@ -14,7 +14,7 @@ export const app = new Elysia({ aot: false })
 	.use(RequireErrorFallback);
 
 if (!process.env.VERCEL) {
-  console.log("test")
+	console.log("test");
 	app.listen(process.env.PORT || 8080);
 	console.log(
 		`🏠 Pronajemik API is running at http://${app.server?.hostname}:${app.server?.port}`,

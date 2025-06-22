@@ -6,5 +6,11 @@
 		"api/*.js": {
 			"excludeFiles": "amogus"
 		}
-	}
+	},
+	"rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/api/index.js"
+    }
+  ]
 }
