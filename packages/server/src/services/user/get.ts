@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
 import type { ServiceResponse } from "pronajemik-common";
 import { failure, success } from "pronajemik-common";
-import type { Database } from "../database";
-import type { User } from "./common";
+import type { Database } from "../database.js";
+import type { User } from "./common.js";
 
 export type GetUserArgs = {
 	database: Database;

@@ -2,8 +2,8 @@ import { Elysia } from "elysia";
 import { LoginRequestSchema, type LoginResponse } from "pronajemik-common";
 
 import { success } from "pronajemik-common";
-import { RequireBase } from "../middlewares/base";
-import { loginUser } from "../services/user/login";
+import { RequireBase } from "../middlewares/base.js";
+import { loginUser } from "../services/user/login.js";
 
 export const LoginRoute = new Elysia({ name: "Route.Login" })
 	.use(RequireBase)

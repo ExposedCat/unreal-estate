@@ -1,6 +1,6 @@
 import type { RegisterRequest, ServiceResponse } from "pronajemik-common";
 import { failure, success } from "pronajemik-common";
-import type { Database } from "../database";
+import type { Database } from "../database.js";
 
 export type RegisterUserArgs = {
 	database: Database;

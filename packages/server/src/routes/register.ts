@@ -5,8 +5,8 @@ import {
 } from "pronajemik-common";
 
 import { success } from "pronajemik-common";
-import { RequireBase } from "../middlewares/base";
-import { registerUser } from "../services/user/register";
+import { RequireBase } from "../middlewares/base.js";
+import { registerUser } from "../services/user/register.js";
 
 export const RegisterRoute = new Elysia({ name: "Route.Register" })
 	.use(RequireBase)

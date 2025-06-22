@@ -1,0 +1,10 @@
+{
+	"buildCommand": "rm -rf src/index.js && bun build src/index.ts --outdir api --root src --target node && ls && ls api && ls .. && ls ..",
+	"relatedProjects": ["prj_sHRfxp00EFsMojO1W8Ywlx4JFuKh"],
+	"outputDirectory": "",
+	"functions": {
+		"api/*.js": {
+			"excludeFiles": "amogus"
+		}
+	}
+}
