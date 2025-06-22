@@ -1,11 +1,15 @@
 {
 	"name": "pronajemik-server",
 	"version": "0.0.0",
+	"type": "module",
 	"scripts": {
-		"dev": "bun run --watch src/index.ts",
-		"typecheck": "tsc --noEmit"
+		"dev": "bun run --watch api/index.ts",
+		"typecheck": "tsc --noEmit",
+		"vercel-build": "rm -rf src/index.js && bun build src/index.ts --outdir api --root src --target node && ls && ls api && ls .. && ls .."
 	},
 	"dependencies": {
+		"@vercel/node": "^5.3.0",
+		"@vercel/related-projects": "^1.0.0",
 		"elysia": "latest",
 		"pronajemik-common": "workspace:*"
 	},

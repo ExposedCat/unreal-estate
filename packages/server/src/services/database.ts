@@ -1,6 +1,6 @@
 import type { Collection } from "mongodb";
 import { MongoClient } from "mongodb";
-import type { User } from "./user/common";
+import type { User } from "./user/common.js";
 
 export type Database = {
 	users: Collection<User>;
