@@ -1,131 +1,88 @@
-import { Field } from "@/components/ui/field";
-import { post } from "@/services/requests";
-import {
-	Box,
-	Button,
-	Card,
-	Link as ChakraLink,
-	Heading,
-	Input,
-	Text,
-	VStack,
-} from "@chakra-ui/react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { Page } from "@/components/layout";
+import { createFileRoute } from "@tanstack/react-router";
 
 function RegisterPage() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-	const [error, setError] = useState("");
-	const navigate = useNavigate();
+	// const [login, setLogin] = useState("");
+	// const [password, setPassword] = useState("");
+	// const [isLoading, setIsLoading] = useState(false);
+	// const [error, setError] = useState("");
+	// const navigate = useNavigate();
 
-	const handleSubmit = async (event: React.FormEvent) => {
-		event.preventDefault();
-		setIsLoading(true);
-		setError("");
+	// const handleSubmit = async (event: React.FormEvent) => {
+	// 	event.preventDefault();
+	// 	setIsLoading(true);
+	// 	setError("");
 
-		if (password !== confirmPassword) {
-			setError("Passwords do not match");
-			setIsLoading(false);
-			return;
-		}
+	// 	const response = await post("/login", { email: login, password });
 
-		if (password.length < 6) {
-			setError("Password must be at least 6 characters long");
-			setIsLoading(false);
-			return;
-		}
+	// 	if (response.ok) {
+	// 		localStorage.setItem("token", response.data);
+	// 		navigate({ to: "/" });
+	// 	} else {
+	// 		setError(response.error || "Login failed");
+	// 	}
 
-		const response = await post("/register", { email, password });
-
-		if (response.ok) {
-			localStorage.setItem("token", response.data);
-			navigate({ to: "/" });
-		} else {
-			setError(response.error || "Registration failed");
-		}
-
-		setIsLoading(false);
-	};
+	// 	setIsLoading(false);
+	// };
 
 	return (
-		<Box maxW="md" mx="auto" mt={12}>
-			<Card.Root p={8}>
-				<VStack gap={6}>
-					<Heading size="lg" textAlign="center">
-						Create Account
-					</Heading>
-					<Text color="gray.600" textAlign="center">
-						Join us to find your perfect property
-					</Text>
+		<Page>
+			{/* <PageHeader
+				title="Welcome Back"
+				subtitle="Sign in to your account"
+				size="lg"
+				textAlign="center"
+			/>
 
-					{error && (
-						<Box
-							p={3}
-							bg="error.50"
-							borderColor="error.200"
-							borderWidth="1px"
-							borderRadius="md"
-							w="full"
-						>
-							<Text color="error.600">{error}</Text>
-						</Box>
-					)}
+			{error && (
+				<Alert status="error" width="full">
+					{error}
+				</Alert>
+			)}
 
-					<Box as="form" onSubmit={handleSubmit} w="full">
-						<VStack gap={4}>
-							<Field label="Email" required>
-								<Input
-									type="email"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-									placeholder="Enter your email address"
-								/>
-							</Field>
+			<Card width="full">
+				<Box as="form" onSubmit={handleSubmit} width="full">
+					<VStack gap="form.section">
+						<Field
+							label="Username or Email"
+							required
+							type="text"
+							value={login}
+							onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+								setLogin(event.target.value)
+							}
+							placeholder="Enter your username or email"
+						/>
 
-							<Field label="Password" required>
-								<Input
-									type="password"
-									value={password}
-									onChange={(e) => setPassword(e.target.value)}
-									placeholder="Create a password"
-									minLength={6}
-								/>
-							</Field>
+						<Field
+							label="Password"
+							required
+							type="password"
+							value={password}
+							onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+								setPassword(event.target.value)
+							}
+							placeholder="Enter your password"
+						/>
 
-							<Field label="Confirm Password" required>
-								<Input
-									type="password"
-									value={confirmPassword}
-									onChange={(e) => setConfirmPassword(e.target.value)}
-									placeholder="Confirm your password"
-								/>
-							</Field>
+						<Button
+							type="submit"
+							width="full"
+							isLoading={isLoading}
+							label="Sign In"
+							loadingLabel="Signing In..."
+						/>
+					</VStack>
+				</Box>
+			</Card>
 
-							<Button
-								type="submit"
-								colorScheme="primary"
-								size="lg"
-								w="full"
-								disabled={isLoading}
-							>
-								{isLoading ? "Creating Account..." : "Create Account"}
-							</Button>
-						</VStack>
-					</Box>
-
-					<Text fontSize="sm" color="gray.500" textAlign="center">
-						Already have an account?{" "}
-						<ChakraLink asChild color="primary.500">
-							<Link to="/login">Sign in here</Link>
-						</ChakraLink>
-					</Text>
-				</VStack>
-			</Card.Root>
-		</Box>
+			<Text fontSize="sm" color="text.muted" textAlign="center">
+				Don't have an account?
+				<ChakraLink asChild color="interactive.primary">
+					<Link to="/register">Sign up here</Link>
+				</ChakraLink>
+			</Text> */}
+		</Page>
 	);
 }
 

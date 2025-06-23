@@ -1,32 +1,22 @@
-import { Field } from "@/components/ui/field";
+import { Page } from "@/components/layout";
+import { Button, Input, Label } from "@/components/ui";
+import { Form, useForm } from "@/components/ui/Form";
 import { post } from "@/services/requests";
-import {
-	Box,
-	Button,
-	Card,
-	Link as ChakraLink,
-	Heading,
-	Input,
-	Text,
-	VStack,
-} from "@chakra-ui/react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { LoginRequestSchema } from "pronajemik-common";
 import { useState } from "react";
 
 function LoginPage() {
-	const [login, setLogin] = useState("");
-	const [password, setPassword] = useState("");
+	const { register, makeSubmit } = useForm(LoginRequestSchema);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
 
-	const handleSubmit = async (event: React.FormEvent) => {
-		event.preventDefault();
+	const onSubmit = makeSubmit(async (data) => {
 		setIsLoading(true);
 		setError("");
 
-		const response = await post("/login", { email: login, password });
+		const response = await post("/login", data);
 
 		if (response.ok) {
 			localStorage.setItem("token", response.data);
@@ -36,73 +26,56 @@ function LoginPage() {
 		}
 
 		setIsLoading(false);
-	};
+	});
 
 	return (
-		<Box maxW="md" mx="auto" mt={12}>
-			<Card.Root p={8}>
-				<VStack gap={6}>
-					<Heading size="lg" textAlign="center">
-						Welcome Back
-					</Heading>
-					<Text color="gray.600" textAlign="center">
-						Sign in to your account
-					</Text>
+		<Page>
+			<Label text="Welcome Back" size="large" />
+			<Label text="Sign in to your account" align="center" />
 
-					{error && (
-						<Box
-							p={3}
-							bg="error.50"
-							borderColor="error.200"
-							borderWidth="1px"
-							borderRadius="md"
-							w="full"
-						>
-							<Text color="error.600">{error}</Text>
-						</Box>
-					)}
+			{error}
 
-					<Box as="form" onSubmit={handleSubmit} w="full">
-						<VStack gap={4}>
-							<Field label="Username or Email" required>
-								<Input
-									type="text"
-									value={login}
-									onChange={(event) => setLogin(event.target.value)}
-									placeholder="Enter your username or email"
-								/>
-							</Field>
+			<Form onSubmit={onSubmit}>
+				<Input
+					required
+					width="large"
+					type="email"
+					placeholder="Email"
+					{...register("email")}
+				/>
+				<Input
+					required
+					width="large"
+					type="password"
+					placeholder="Password"
+					{...register("password")}
+				/>
 
-							<Field label="Password" required>
-								<Input
-									type="password"
-									value={password}
-									onChange={(event) => setPassword(event.target.value)}
-									placeholder="Enter your password"
-								/>
-							</Field>
+				<Label
+					text="By proceeding, you agree to our Terms of Service and Privacy Policy."
+					size="small"
+					align="center"
+				/>
 
-							<Button
-								type="submit"
-								colorScheme="primary"
-								size="lg"
-								w="full"
-								disabled={isLoading}
-							>
-								{isLoading ? "Signing In..." : "Sign In"}
-							</Button>
-						</VStack>
-					</Box>
+				<Button
+					type="submit"
+					width="large"
+					disabled={isLoading}
+					label={isLoading ? "Signing In..." : "Sign In"}
+				/>
+			</Form>
 
-					<Text fontSize="sm" color="gray.500" textAlign="center">
-						Don't have an account?{" "}
-						<ChakraLink asChild color="primary.500">
-							<Link to="/register">Sign up here</Link>
-						</ChakraLink>
-					</Text>
-				</VStack>
-			</Card.Root>
-		</Box>
+			<Label
+				text={
+					<>
+						Don't have an account?
+						<Link to="/register">
+							<Label text="Sign up here" />
+						</Link>
+					</>
+				}
+			/>
+		</Page>
 	);
 }
 
