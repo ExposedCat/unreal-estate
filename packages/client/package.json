@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"codegen": "bunx @chakra-ui/cli typegen ./src/theme.ts && bunx tsr generate",
+		"codegen": "bunx tsr generate",
 		"build": "bun codegen && tsc -b && vite build",
 		"preview": "vite preview",
 		"typecheck": "tsc --noEmit"
