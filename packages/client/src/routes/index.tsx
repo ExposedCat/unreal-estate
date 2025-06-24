@@ -1,6 +1,6 @@
 import { Column, Page } from "@/components/layout";
 import { Button, Label } from "@/components/ui";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
 	component: () => (
@@ -13,9 +13,9 @@ export const Route = createFileRoute("/")({
 				/>
 			</Column>
 			<Column gap="sm">
-				<a href="/login">
+				<Link to="/dashboard">
 					<Button label="Search Properties" />
-				</a>
+				</Link>
 				<Label text="Over 10,000+ properties available" size="small" />
 			</Column>
 		</Page>

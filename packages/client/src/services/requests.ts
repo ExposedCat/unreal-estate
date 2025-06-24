@@ -79,6 +79,12 @@ export async function request<E extends ApiEndpoints>(
 			...headers,
 		};
 
+		// Add authorization header if token exists
+		const token = localStorage.getItem("token");
+		if (token) {
+			requestHeaders.authorization = token;
+		}
+
 		if (body !== undefined) {
 			requestHeaders["Content-Type"] = "application/json";
 		}

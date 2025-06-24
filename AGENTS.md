@@ -30,3 +30,4 @@ Webapp for real estate agents and rent seekers. Outstanding feature is that ther
 - Don't create types files. Put types whenever they make sense to be placed
 - Don't put 'use *' on top of files
 - Always write typesafe code without `any`
+- Use `Link` or hooks from `@tanstack/react-router` instead of `<a>`

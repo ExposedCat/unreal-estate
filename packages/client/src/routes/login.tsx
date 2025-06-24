@@ -1,16 +1,29 @@
 import { Page, Row } from "@/components/layout";
 import { Button, Card, Input, Label } from "@/components/ui";
 import { Form, useForm } from "@/components/ui/Form";
+import { useRedirectAuthorized } from "@/hooks";
 import { request } from "@/services/requests";
-import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+	Link,
+	createFileRoute,
+	useNavigate,
+	useSearch,
+} from "@tanstack/react-router";
 import { LoginRequestSchema } from "pronajemik-common";
 import { useState } from "react";
+
+type LoginSearch = {
+	redirect?: string;
+};
 
 function LoginPage() {
 	const { register, makeSubmit } = useForm(LoginRequestSchema);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+	const search = useSearch({ from: "/login" });
+
+	useRedirectAuthorized({ redirect: search.redirect });
 
 	const onSubmit = makeSubmit(async (data) => {
 		setIsLoading(true);
@@ -21,7 +34,7 @@ function LoginPage() {
 
 			if (response.ok) {
 				localStorage.setItem("token", response.data);
-				navigate({ to: "/" });
+				navigate({ to: search.redirect || "/dashboard" });
 			} else {
 				setError(response.error || "Login failed");
 			}
@@ -66,7 +79,10 @@ function LoginPage() {
 			</Form>
 
 			<Label text="Don't have an account? ">
-				<Link to="/register">
+				<Link
+					to="/register"
+					search={search.redirect ? { redirect: search.redirect } : {}}
+				>
 					<Label text="Sign up here" />
 				</Link>
 			</Label>
@@ -76,4 +92,7 @@ function LoginPage() {
 
 export const Route = createFileRoute("/login")({
 	component: LoginPage,
+	validateSearch: (search: Record<string, unknown>): LoginSearch => ({
+		redirect: search.redirect as string,
+	}),
 });
