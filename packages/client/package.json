@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.1.1",
+		"@tanstack/react-query": "^5.81.2",
 		"@tanstack/react-router": "^1.121.27",
 		"pronajemik-common": "workspace:*",
 		"react": "^19.1.0",

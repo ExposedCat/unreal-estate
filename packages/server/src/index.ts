@@ -4,6 +4,7 @@ import { RequireBase } from "./middlewares/base.js";
 import { RequireErrorFallback } from "./middlewares/fallback.js";
 import { LoginRoute } from "./routes/login.js";
 import { RegisterRoute } from "./routes/register.js";
+import { SessionRoute } from "./routes/session.js";
 
 const app = new Elysia()
 	.use(RequireBase)
@@ -11,6 +12,7 @@ const app = new Elysia()
 	.use(LoginRoute)
 	.use(RegisterRoute)
 	// Private
+	.use(SessionRoute)
 	//
 	.use(RequireErrorFallback)
 	.listen(process.env.PORT || 8080);

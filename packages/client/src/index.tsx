@@ -2,6 +2,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { QueryProvider } from "./providers/QueryProvider";
 import { routeTree } from "./routeTree.gen";
 import { applyGlobalStyles } from "./theme";
 
@@ -20,6 +21,8 @@ applyGlobalStyles();
 
 createRoot(root).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<QueryProvider>
+			<RouterProvider router={router} />
+		</QueryProvider>
 	</StrictMode>,
 );

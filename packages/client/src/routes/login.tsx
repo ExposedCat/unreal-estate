@@ -1,7 +1,7 @@
 import { Page, Row } from "@/components/layout";
 import { Button, Card, Input, Label } from "@/components/ui";
 import { Form, useForm } from "@/components/ui/Form";
-import { post } from "@/services/requests";
+import { request } from "@/services/requests";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
 import { LoginRequestSchema } from "pronajemik-common";
 import { useState } from "react";
@@ -16,13 +16,17 @@ function LoginPage() {
 		setIsLoading(true);
 		setError("");
 
-		const response = await post("/login", data);
+		try {
+			const response = await request("POST", "/login", { body: data });
 
-		if (response.ok) {
-			localStorage.setItem("token", response.data);
-			navigate({ to: "/" });
-		} else {
-			setError(response.error || "Login failed");
+			if (response.ok) {
+				localStorage.setItem("token", response.data);
+				navigate({ to: "/" });
+			} else {
+				setError(response.error || "Login failed");
+			}
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "Login failed");
 		}
 
 		setIsLoading(false);
@@ -31,7 +35,6 @@ function LoginPage() {
 	return (
 		<Page>
 			<Label text="Welcome Back" size="large" />
-			<Label text="Sign in to your account" align="center" />
 
 			{error && <Card color="error">{error}</Card>}
 
@@ -52,13 +55,7 @@ function LoginPage() {
 					{...register("password")}
 				/>
 
-				<Row css={{ marginTop: "$sm" }}>
-					<Label
-						text="By proceeding, you agree to our Terms of Service and Privacy Policy."
-						size="small"
-						align="center"
-					/>
-				</Row>
+				<Row css={{ marginTop: "$sm" }} />
 
 				<Button
 					type="submit"

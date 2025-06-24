@@ -1,87 +1,82 @@
-import { Page } from "@/components/layout";
-import { createFileRoute } from "@tanstack/react-router";
+import { Page, Row } from "@/components/layout";
+import { Button, Card, Input, Label } from "@/components/ui";
+import { Form, useForm } from "@/components/ui/Form";
+import { request } from "@/services/requests";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { RegisterRequestSchema } from "pronajemik-common";
+import { useState } from "react";
 
 function RegisterPage() {
-	// const [login, setLogin] = useState("");
-	// const [password, setPassword] = useState("");
-	// const [isLoading, setIsLoading] = useState(false);
-	// const [error, setError] = useState("");
-	// const navigate = useNavigate();
+	const { register, makeSubmit } = useForm(RegisterRequestSchema);
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState("");
+	const navigate = useNavigate();
 
-	// const handleSubmit = async (event: React.FormEvent) => {
-	// 	event.preventDefault();
-	// 	setIsLoading(true);
-	// 	setError("");
+	const onSubmit = makeSubmit(async (data) => {
+		setIsLoading(true);
+		setError("");
 
-	// 	const response = await post("/login", { email: login, password });
+		try {
+			const response = await request("POST", "/register", { body: data });
 
-	// 	if (response.ok) {
-	// 		localStorage.setItem("token", response.data);
-	// 		navigate({ to: "/" });
-	// 	} else {
-	// 		setError(response.error || "Login failed");
-	// 	}
+			if (response.ok) {
+				localStorage.setItem("token", response.data);
+				navigate({ to: "/" });
+			} else {
+				setError(response.error || "Registration failed");
+			}
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "Registration failed");
+		}
 
-	// 	setIsLoading(false);
-	// };
+		setIsLoading(false);
+	});
 
 	return (
 		<Page>
-			{/* <PageHeader
-				title="Welcome Back"
-				subtitle="Sign in to your account"
-				size="lg"
-				textAlign="center"
-			/>
+			<Label text="Sign Up" size="large" />
+			<Label text="No ads. No emails. No bullshit." align="center" />
 
-			{error && (
-				<Alert status="error" width="full">
-					{error}
-				</Alert>
-			)}
+			{error && <Card color="error">{error}</Card>}
 
-			<Card width="full">
-				<Box as="form" onSubmit={handleSubmit} width="full">
-					<VStack gap="form.section">
-						<Field
-							label="Username or Email"
-							required
-							type="text"
-							value={login}
-							onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-								setLogin(event.target.value)
-							}
-							placeholder="Enter your username or email"
-						/>
+			<Form onSubmit={onSubmit}>
+				<Input
+					required
+					width="large"
+					type="email"
+					placeholder="Email"
+					{...register("email")}
+				/>
+				<Input
+					required
+					width="large"
+					type="password"
+					placeholder="Password"
+					autoComplete="new-password"
+					{...register("password")}
+				/>
 
-						<Field
-							label="Password"
-							required
-							type="password"
-							value={password}
-							onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-								setPassword(event.target.value)
-							}
-							placeholder="Enter your password"
-						/>
+				<Row css={{ marginTop: "$sm" }}>
+					<Label
+						text="By proceeding, you agree to our Terms of Service and Privacy Policy."
+						size="small"
+						align="center"
+					/>
+				</Row>
 
-						<Button
-							type="submit"
-							width="full"
-							isLoading={isLoading}
-							label="Sign In"
-							loadingLabel="Signing In..."
-						/>
-					</VStack>
-				</Box>
-			</Card>
+				<Button
+					type="submit"
+					width="large"
+					disabled={isLoading}
+					label={isLoading ? "Signing Up..." : "Sign Up"}
+				/>
+			</Form>
 
-			<Text fontSize="sm" color="text.muted" textAlign="center">
-				Don't have an account?
-				<ChakraLink asChild color="interactive.primary">
-					<Link to="/register">Sign up here</Link>
-				</ChakraLink>
-			</Text> */}
+			<Label text="Already have an account? ">
+				<Link to="/login">
+					<Label text="Sign in here" />
+				</Link>
+			</Label>
 		</Page>
 	);
 }

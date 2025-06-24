@@ -5,6 +5,7 @@ setupFormats();
 export * from "./schemas/routes/login";
 export * from "./schemas/routes/register";
 export * from "./schemas/routes/estate";
+export * from "./schemas/routes/session";
 
 export * from "./schemas/common";
 export * from "./services/response";
