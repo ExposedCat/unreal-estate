@@ -1,5 +1,5 @@
-import { Page } from "@/components/layout";
-import { Button, Input, Label } from "@/components/ui";
+import { Page, Row } from "@/components/layout";
+import { Button, Card, Input, Label } from "@/components/ui";
 import { Form, useForm } from "@/components/ui/Form";
 import { post } from "@/services/requests";
 import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
@@ -33,7 +33,7 @@ function LoginPage() {
 			<Label text="Welcome Back" size="large" />
 			<Label text="Sign in to your account" align="center" />
 
-			{error}
+			{error && <Card color="error">{error}</Card>}
 
 			<Form onSubmit={onSubmit}>
 				<Input
@@ -51,11 +51,13 @@ function LoginPage() {
 					{...register("password")}
 				/>
 
-				<Label
-					text="By proceeding, you agree to our Terms of Service and Privacy Policy."
-					size="small"
-					align="center"
-				/>
+				<Row css={{ marginTop: "$sm" }}>
+					<Label
+						text="By proceeding, you agree to our Terms of Service and Privacy Policy."
+						size="small"
+						align="center"
+					/>
+				</Row>
 
 				<Button
 					type="submit"
@@ -65,16 +67,11 @@ function LoginPage() {
 				/>
 			</Form>
 
-			<Label
-				text={
-					<>
-						Don't have an account?
-						<Link to="/register">
-							<Label text="Sign up here" />
-						</Link>
-					</>
-				}
-			/>
+			<Label text="Don't have an account? ">
+				<Link to="/register">
+					<Label text="Sign up here" />
+				</Link>
+			</Label>
 		</Page>
 	);
 }

@@ -23,7 +23,6 @@ Webapp for real estate agents and rent seekers. Outstanding feature is that ther
 # Code Style Requirements
 - Always use readable full names (e.g. use `error` instead of `e` or `err`, and similar)
 - Never leave comments
-- Never insert spaces like `{' '}`
 - Always use `type` instead of `interface`
 - Don't create types files. Put types whenever they make sense to be placed
 - Don't put 'use *' on top of files

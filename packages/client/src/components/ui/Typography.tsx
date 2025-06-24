@@ -51,6 +51,15 @@ type LabelProps = Omit<ComponentProps<typeof StyledLabel>, "children"> & {
 	text: React.ReactNode;
 };
 
-export const Label: React.FC<LabelProps> = ({ text, ...props }) => {
-	return <StyledLabel {...props}>{text}</StyledLabel>;
+export const Label: React.FC<React.PropsWithChildren<LabelProps>> = ({
+	text,
+	children,
+	...props
+}) => {
+	return (
+		<StyledLabel {...props}>
+			{text}
+			{children}
+		</StyledLabel>
+	);
 };
