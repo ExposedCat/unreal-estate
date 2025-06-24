@@ -48,6 +48,7 @@ function LoginPage() {
 					width="large"
 					type="password"
 					placeholder="Password"
+					autoComplete="current-password"
 					{...register("password")}
 				/>
 

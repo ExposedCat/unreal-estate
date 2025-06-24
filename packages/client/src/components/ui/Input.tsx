@@ -2,6 +2,7 @@ import { styled } from "@/theme";
 import type { ComponentProps } from "@stitches/react";
 
 const StyledInput = styled("input", {
+	outline: "none",
 	borderWidth: "$thin",
 	borderStyle: "solid",
 	borderColor: "$border-default",
@@ -26,9 +27,10 @@ const StyledInput = styled("input", {
 	// "&:hover": {
 	// 	backgroundColor: "$primaryHover",
 	// },
-	// "&:active": {
-	// 	backgroundColor: "$primaryActive",
-	// },
+	"&:focus": {
+		boxShadow:
+			"inset 0 calc(-$borderWidths$thick + $borderWidths$thin) 0 0 black",
+	},
 });
 
 export const Input: React.FC<ComponentProps<typeof StyledInput>> = ({
