@@ -26,3 +26,6 @@ export const ErrorResponseSchema = Type.Object({
 });
 
 export type ErrorResponse = Static<typeof ErrorResponseSchema>;
+
+export const WithError = <T extends TSchema>(schema: T) =>
+	Type.Union([SuccessResponseSchema(schema), ErrorResponseSchema]);
