@@ -9,7 +9,8 @@ const StyledInput = styled("button", {
 	borderColor: "$border-default",
 	borderStyle: "solid",
 	cursor: "pointer",
-	padding: "$md",
+	paddingInline: "$md",
+	paddingBlock: "$sm",
 	backgroundColor: "$bg-surface",
 	variants: {
 		width: {
