@@ -1,13 +1,13 @@
 import { useRequest } from "@/hooks/useRequest";
 import { useNavigate } from "@tanstack/react-router";
-import { SessionResponseSchema } from "pronajemik-common";
+import { Session_Get_Response_Schema } from "pronajemik-common";
 import { useCallback } from "react";
 
 export function useSession() {
 	const navigate = useNavigate();
 
 	const { data: sessionResponse } = useRequest("GET", "/session", {
-		responseSchema: SessionResponseSchema,
+		responseSchema: Session_Get_Response_Schema,
 		enabled: !!localStorage.getItem("token"),
 	});
 

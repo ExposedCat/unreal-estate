@@ -1,6 +1,6 @@
 import { useRequest } from "@/hooks/useRequest";
 import { useNavigate } from "@tanstack/react-router";
-import { SessionResponseSchema } from "pronajemik-common";
+import { Session_Get_Response_Schema } from "pronajemik-common";
 import { useEffect, useRef } from "react";
 
 type UseRedirectAuthorizedOptions = {
@@ -15,7 +15,7 @@ export function useRedirectAuthorized(
 	const hasInitialToken = useRef(!!localStorage.getItem("token"));
 
 	const { data: sessionData, error } = useRequest("GET", "/session", {
-		responseSchema: SessionResponseSchema,
+		responseSchema: Session_Get_Response_Schema,
 		enabled: hasInitialToken.current,
 	});
 

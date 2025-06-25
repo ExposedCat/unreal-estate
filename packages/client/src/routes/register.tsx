@@ -9,7 +9,7 @@ import {
 	useNavigate,
 	useSearch,
 } from "@tanstack/react-router";
-import { RegisterRequestSchema } from "pronajemik-common";
+import { Register_Post_Body_Schema } from "pronajemik-common";
 import { useState } from "react";
 
 type RegisterSearch = {
@@ -17,7 +17,7 @@ type RegisterSearch = {
 };
 
 function RegisterPage() {
-	const { register, makeSubmit } = useForm(RegisterRequestSchema);
+	const { register, makeSubmit } = useForm(Register_Post_Body_Schema);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();

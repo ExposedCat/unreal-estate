@@ -1,26 +1,26 @@
 import type { Static, TSchema } from "@sinclair/typebox";
 import { Value } from "@sinclair/typebox/value";
 import {
-	LoginRequestSchema,
-	LoginResponseSchema,
-	RegisterRequestSchema,
-	RegisterResponseSchema,
-	SessionResponseSchema,
+	Login_Post_Body_Schema,
+	Login_Post_Response_Schema,
+	Register_Post_Body_Schema,
+	Register_Post_Response_Schema,
+	Session_Get_Response_Schema,
 } from "pronajemik-common";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 
 export const ApiSchemas = {
 	"/login": {
-		request: LoginRequestSchema,
-		response: LoginResponseSchema,
+		request: Login_Post_Body_Schema,
+		response: Login_Post_Response_Schema,
 	},
 	"/register": {
-		request: RegisterRequestSchema,
-		response: RegisterResponseSchema,
+		request: Register_Post_Body_Schema,
+		response: Register_Post_Response_Schema,
 	},
 	"/session": {
-		response: SessionResponseSchema,
+		response: Session_Get_Response_Schema,
 	},
 } as const;
 
