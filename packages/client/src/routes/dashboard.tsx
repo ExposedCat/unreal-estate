@@ -1,6 +1,7 @@
 import { Page, Row } from "@/components/layout";
 import { Button, Label } from "@/components/ui";
 import { useSession } from "@/hooks";
+import { requireAuth } from "@/utils";
 import { Link, createFileRoute } from "@tanstack/react-router";
 
 function DashboardPage() {

@@ -6,7 +6,12 @@ import { QueryProvider } from "./providers/QueryProvider";
 import { routeTree } from "./routeTree.gen";
 import { applyGlobalStyles } from "./theme";
 
-const router = createRouter({ routeTree });
+const router = createRouter({
+	routeTree,
+	// Use "fuzzy" later on when each section will have own not-found pages:
+	// https://tanstack.com/router/latest/docs/framework/react/guide/not-found-errors
+	notFoundMode: "root",
+});
 
 declare module "@tanstack/react-router" {
 	interface Register {
