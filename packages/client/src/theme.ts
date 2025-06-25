@@ -28,7 +28,7 @@ export const { styled, css, createTheme } = createStitches({
 			"bg-muted": "#f3f4f6",
 			"border-default": "#1d1c1c",
 			"status-success": "#16a34a",
-			"status-warning": "#ea580c",
+			"status-warning": "#ea9e0c",
 			"status-error": "#dc2626",
 			"status-info": "#0891b2",
 			"interactive-primary": "#2563eb",
@@ -43,6 +43,8 @@ export const { styled, css, createTheme } = createStitches({
 		},
 		sizes: {
 			full: "100%",
+			xs: "10rem",
+			sm: "20rem",
 			md: "30rem",
 			lg: "45rem",
 			maxView: "72rem",

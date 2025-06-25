@@ -17,17 +17,17 @@ export const Card = styled(Column, {
 			},
 			info: {
 				fontWeight: "$bold",
-				background: "color-mix(in oklab, $status-info, white 10%)",
+				background: "color-mix(in oklab, $status-info, white 50%)",
 				borderColor: "$status-info",
 			},
 			success: {
 				fontWeight: "$bold",
-				background: "color-mix(in oklab, $status-success, white 10%)",
+				background: "color-mix(in oklab, $status-success, white 50%)",
 				borderColor: "$status-success",
 			},
 			warning: {
 				fontWeight: "$bold",
-				background: "color-mix(in oklab, $status-warning, white 10%)",
+				background: "color-mix(in oklab, $status-warning, white 50%)",
 				borderColor: "$status-warning",
 			},
 			error: {
