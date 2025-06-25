@@ -1,4 +1,4 @@
-import { useRequest } from "@/hooks/useRequest";
+import { useSession } from "@/hooks/useSession";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 
@@ -13,21 +13,17 @@ export function useRedirectAuthorized(
 	const navigate = useNavigate();
 	const hasInitialToken = useRef(!!localStorage.getItem("token"));
 
-	const { data: sessionData, error } = useRequest("GET", "/session", {
-		enabled: hasInitialToken.current,
-	});
+	const { isAuthorized } = useSession();
 
 	useEffect(() => {
 		if (!hasInitialToken.current) return;
 
-		if (sessionData) {
+		if (isAuthorized) {
 			if (redirect) {
 				navigate({ to: redirect });
 			} else {
 				navigate({ to: "/dashboard" });
 			}
-		} else if (error) {
-			localStorage.removeItem("token");
 		}
-	}, [sessionData, error, redirect, navigate]);
+	}, [isAuthorized, redirect, navigate]);
 }

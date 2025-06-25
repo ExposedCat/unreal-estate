@@ -1,7 +1,6 @@
 import cors from "@elysiajs/cors";
 import { jwt as jwtPlugin } from "@elysiajs/jwt";
 import { Elysia, t } from "elysia";
-import { failure } from "pronajemik-common";
 import { createDbConnection } from "../services/database";
 
 export const RequireBase = new Elysia({ name: "Middleware.Base" })
@@ -21,10 +20,6 @@ export const RequireBase = new Elysia({ name: "Middleware.Base" })
 			}),
 		}),
 	)
-	.on("error", ({ error }) => {
-		console.error(error);
-		return failure(error.message ?? "Unknown error");
-	})
 	.decorate(
 		"database",
 		await createDbConnection(

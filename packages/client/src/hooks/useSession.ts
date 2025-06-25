@@ -5,9 +5,7 @@ import { useCallback } from "react";
 export function useSession() {
 	const navigate = useNavigate();
 
-	const { data: sessionData } = useRequest("GET", "/session", {
-		enabled: !!localStorage.getItem("token"),
-	});
+	const { isSuccess, data: sessionData } = useRequest("GET", "/session");
 
 	const logout = useCallback(() => {
 		localStorage.removeItem("token");
@@ -15,6 +13,7 @@ export function useSession() {
 	}, [navigate]);
 
 	return {
+		isAuthorized: isSuccess,
 		data: sessionData ?? null,
 		logout,
 	};

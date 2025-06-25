@@ -66,69 +66,6 @@ function isServiceResponse<T>(data: unknown): data is ServiceResponseLike<T> {
 	);
 }
 
-function toUseRequestResult<D>(result: {
-	isLoading: boolean;
-	error: unknown;
-	data: unknown;
-	refetch: () => void;
-	reset: () => void;
-}):
-	| UseRequestResultSuccess<D>
-	| UseRequestResultError
-	| UseRequestResultLoading {
-	const { isLoading, error, data, refetch, reset } = result;
-
-	if (isLoading) {
-		return {
-			isLoading: true,
-			isError: false,
-			isSuccess: false,
-			data: undefined,
-			error: null,
-			refetch,
-			reset,
-		};
-	}
-
-	if (error instanceof Error) {
-		return {
-			isLoading: false,
-			isError: true,
-			isSuccess: false,
-			data: undefined,
-			error: error.message,
-			refetch,
-			reset,
-		};
-	}
-
-	if (!isServiceResponse<D>(data)) {
-		throw new Error("API did not return a valid ServiceResponse shape");
-	}
-	const serviceResponse = data as ServiceResponseLike<D>;
-
-	if (serviceResponse.ok) {
-		return {
-			isLoading: false,
-			isError: false,
-			isSuccess: true,
-			data: serviceResponse.data,
-			error: null,
-			refetch,
-			reset,
-		};
-	}
-	return {
-		isLoading: false,
-		isError: true,
-		isSuccess: false,
-		data: undefined,
-		error: serviceResponse.error ?? "Unknown error",
-		refetch,
-		reset,
-	};
-}
-
 export function useRequest<E extends ApiEndpoints, M extends ValidMethods<E>>(
 	method: M,
 	endpoint: E,
@@ -166,13 +103,73 @@ export function useRequest<E extends ApiEndpoints, M extends ValidMethods<E>>(
 			queryResult.refetch();
 		}, [queryResult]);
 
-		return toUseRequestResult<ExtractServiceData<ResponseData<E, M>>>({
-			isLoading: queryResult.isLoading,
-			error: queryResult.error,
-			data: queryResult.data,
+		if (!enabled || shouldPause) {
+			return {
+				isLoading: true,
+				isError: false,
+				isSuccess: false,
+				data: undefined,
+				error: null,
+				refetch,
+				reset: refetch,
+			};
+		}
+
+		if (queryResult.isLoading) {
+			return {
+				isLoading: true,
+				isError: false,
+				isSuccess: false,
+				data: undefined,
+				error: null,
+				refetch,
+				reset: refetch,
+			};
+		}
+
+		if (queryResult.error instanceof Error) {
+			return {
+				isLoading: false,
+				isError: true,
+				isSuccess: false,
+				data: undefined,
+				error: queryResult.error.message,
+				refetch,
+				reset: refetch,
+			};
+		}
+
+		if (
+			!isServiceResponse<ExtractServiceData<ResponseData<E, M>>>(
+				queryResult.data,
+			)
+		) {
+			throw new Error("API did not return a valid ServiceResponse shape");
+		}
+		const serviceResponse = queryResult.data as ServiceResponseLike<
+			ExtractServiceData<ResponseData<E, M>>
+		>;
+
+		if (serviceResponse.ok) {
+			return {
+				isLoading: false,
+				isError: false,
+				isSuccess: true,
+				data: serviceResponse.data,
+				error: null,
+				refetch,
+				reset: refetch,
+			};
+		}
+		return {
+			isLoading: false,
+			isError: true,
+			isSuccess: false,
+			data: undefined,
+			error: serviceResponse.error ?? "Unknown error",
 			refetch,
 			reset: refetch,
-		});
+		};
 	}
 
 	const mutationResult = useMutation({
@@ -196,11 +193,71 @@ export function useRequest<E extends ApiEndpoints, M extends ValidMethods<E>>(
 		}
 	}, [shouldPause, enabled, refetch]);
 
-	return toUseRequestResult<ExtractServiceData<ResponseData<E, M>>>({
-		isLoading: mutationResult.isPending,
-		error: mutationResult.error,
-		data: mutationResult.data,
+	if (!enabled || shouldPause) {
+		return {
+			isLoading: true,
+			isError: false,
+			isSuccess: false,
+			data: undefined,
+			error: null,
+			refetch,
+			reset,
+		};
+	}
+
+	if (mutationResult.isPending) {
+		return {
+			isLoading: true,
+			isError: false,
+			isSuccess: false,
+			data: undefined,
+			error: null,
+			refetch,
+			reset,
+		};
+	}
+
+	if (mutationResult.error instanceof Error) {
+		return {
+			isLoading: false,
+			isError: true,
+			isSuccess: false,
+			data: undefined,
+			error: mutationResult.error.message,
+			refetch,
+			reset,
+		};
+	}
+
+	if (
+		!isServiceResponse<ExtractServiceData<ResponseData<E, M>>>(
+			mutationResult.data,
+		)
+	) {
+		throw new Error("API did not return a valid ServiceResponse shape");
+	}
+	const serviceResponse = mutationResult.data as ServiceResponseLike<
+		ExtractServiceData<ResponseData<E, M>>
+	>;
+
+	if (serviceResponse.ok) {
+		return {
+			isLoading: false,
+			isError: false,
+			isSuccess: true,
+			data: serviceResponse.data,
+			error: null,
+			refetch,
+			reset,
+		};
+	}
+	return {
+		isLoading: false,
+		isError: true,
+		isSuccess: false,
+		data: undefined,
+		error: serviceResponse.error ?? "Unknown error",
 		refetch,
 		reset,
-	});
+	};
 }
