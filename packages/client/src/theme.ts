@@ -1,86 +1,72 @@
-import { createSystem, defaultConfig, defineConfig } from "@chakra-ui/react";
+import { createStitches, globalCss } from "@stitches/react";
 
-const config = defineConfig({
-	theme: {
-		tokens: {
-			colors: {
-				sample: { value: "red" },
-				primary: {
-					50: { value: "#eff6ff" },
-					100: { value: "#dbeafe" },
-					200: { value: "#bfdbfe" },
-					300: { value: "#93c5fd" },
-					400: { value: "#60a5fa" },
-					500: { value: "#3b82f6" },
-					600: { value: "#2563eb" },
-					700: { value: "#1d4ed8" },
-					800: { value: "#1e40af" },
-					900: { value: "#1e3a8a" },
-				},
-				success: {
-					50: { value: "#f0fdf4" },
-					100: { value: "#dcfce7" },
-					200: { value: "#bbf7d0" },
-					300: { value: "#86efac" },
-					400: { value: "#4ade80" },
-					500: { value: "#22c55e" },
-					600: { value: "#16a34a" },
-					700: { value: "#15803d" },
-					800: { value: "#166534" },
-					900: { value: "#14532d" },
-				},
-				error: {
-					50: { value: "#fef2f2" },
-					100: { value: "#fee2e2" },
-					200: { value: "#fecaca" },
-					300: { value: "#fca5a5" },
-					400: { value: "#f87171" },
-					500: { value: "#ef4444" },
-					600: { value: "#dc2626" },
-					700: { value: "#b91c1c" },
-					800: { value: "#991b1b" },
-					900: { value: "#7f1d1d" },
-				},
-				gray: {
-					50: { value: "#f9fafb" },
-					100: { value: "#f3f4f6" },
-					200: { value: "#e5e7eb" },
-					300: { value: "#d1d5db" },
-					400: { value: "#9ca3af" },
-					500: { value: "#6b7280" },
-					600: { value: "#4b5563" },
-					700: { value: "#374151" },
-					800: { value: "#1f2937" },
-					900: { value: "#111827" },
-				},
-			},
-			spacing: {
-				xs: { value: "0.5rem" },
-				sm: { value: "0.75rem" },
-				md: { value: "1rem" },
-				lg: { value: "1.5rem" },
-				xl: { value: "2rem" },
-				"2xl": { value: "3rem" },
-				"3xl": { value: "4rem" },
-			},
-			radii: {
-				sm: { value: "0.25rem" },
-				md: { value: "0.375rem" },
-				lg: { value: "0.5rem" },
-				xl: { value: "0.75rem" },
-			},
-		},
-		semanticTokens: {
-			colors: {
-				primary: {
-					solid: { value: "{colors.primary.500}" },
-					contrast: { value: "white" },
-					fg: { value: "{colors.primary.700}" },
-					muted: { value: "{colors.primary.100}" },
-				},
-			},
-		},
+export const applyGlobalStyles = globalCss({
+	"*": {
+		boxSizing: "border-box",
+		margin: 0,
+		padding: 0,
+		fontFamily: "Raleway, sans-serif",
+	},
+	"html,body,#root": {
+		width: "100%",
+		height: "100%",
+		fontSize: "16px",
 	},
 });
 
-export const system = createSystem(defaultConfig, config);
+export const { styled, css, createTheme } = createStitches({
+	theme: {
+		colors: {
+			white: "#ffffff",
+			black: "#1d1c1c",
+			transparent: "transparent",
+			"text-primary": "#1d1c1c",
+			"text-inverse": "#ffffff",
+			"text-muted": "#6b7280",
+			"bg-canvas": "#B6D9FF",
+			"bg-surface": "#ffffff",
+			"bg-muted": "#f3f4f6",
+			"border-default": "#1d1c1c",
+			"status-success": "#16a34a",
+			"status-warning": "#ea580c",
+			"status-error": "#dc2626",
+			"status-info": "#0891b2",
+			"interactive-primary": "#2563eb",
+			"interactive-primary-hover": "#1d4ed8",
+		},
+		space: {
+			xs: "0.25rem",
+			sm: "0.5rem",
+			md: "1rem",
+			lg: "1.5rem",
+			xl: "2rem",
+		},
+		sizes: {
+			full: "100%",
+			md: "30rem",
+			lg: "45rem",
+			maxView: "72rem",
+		},
+		radii: {
+			none: "0",
+			basic: "0.5rem",
+			full: "50rem",
+		},
+		borderWidths: {
+			none: "0",
+			thin: "0.1rem",
+			thick: "0.25rem",
+		},
+		fontSizes: {
+			small: "0.9rem",
+			normal: "1rem",
+			header: "3rem",
+		},
+		fontWeights: {
+			normal: "400",
+			medium: "500",
+			semibold: "600",
+			bold: "700",
+		},
+	},
+});

@@ -5,20 +5,19 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
-		"codegen": "bunx @chakra-ui/cli typegen ./src/theme.ts && bunx tsr generate",
+		"codegen": "bunx tsr generate",
 		"build": "bun codegen && tsc -b && vite build",
 		"preview": "vite preview",
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@biomejs/biome": "^2.0.0",
-		"@chakra-ui/react": "^3.21.0",
-		"@emotion/react": "^11.14.0",
+		"@hookform/resolvers": "^5.1.1",
+		"@tanstack/react-query": "^5.81.2",
 		"@tanstack/react-router": "^1.121.27",
-		"next-themes": "^0.4.6",
 		"pronajemik-common": "workspace:*",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
+		"react-hook-form": "^7.58.1",
 		"react-icons": "^5.5.0"
 	},
 	"devDependencies": {
@@ -30,5 +29,11 @@
 		"globals": "^16.0.0",
 		"vite": "^6.3.5",
 		"vite-tsconfig-paths": "^5.1.4"
+	},
+	"overrides": {
+		"@hookform/resolvers": {
+			"@sinclair/typebox": "^0.34.36"
+		},
+		"@sinclair/typebox": "^0.34.36"
 	}
 }

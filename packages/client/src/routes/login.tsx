@@ -1,111 +1,98 @@
-import { Field } from "@/components/ui/field";
-import { post } from "@/services/requests";
+import { Page, Row } from "@/components/layout";
+import { Button, Card, Input, Label } from "@/components/ui";
+import { Form, useForm } from "@/components/ui/Form";
+import { useRedirectAuthorized } from "@/hooks";
+import { request } from "@/services/requests";
 import {
-	Box,
-	Button,
-	Card,
-	Link as ChakraLink,
-	Heading,
-	Input,
-	Text,
-	VStack,
-} from "@chakra-ui/react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+	Link,
+	createFileRoute,
+	useNavigate,
+	useSearch,
+} from "@tanstack/react-router";
+import { LoginRequestSchema } from "pronajemik-common";
 import { useState } from "react";
 
+type LoginSearch = {
+	redirect?: string;
+};
+
 function LoginPage() {
-	const [login, setLogin] = useState("");
-	const [password, setPassword] = useState("");
+	const { register, makeSubmit } = useForm(LoginRequestSchema);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+	const search = useSearch({ from: "/login" });
 
-	const handleSubmit = async (event: React.FormEvent) => {
-		event.preventDefault();
+	useRedirectAuthorized({ redirect: search.redirect });
+
+	const onSubmit = makeSubmit(async (data) => {
 		setIsLoading(true);
 		setError("");
 
-		const response = await post("/login", { email: login, password });
+		try {
+			const response = await request("POST", "/login", { body: data });
 
-		if (response.ok) {
-			localStorage.setItem("token", response.data);
-			navigate({ to: "/" });
-		} else {
-			setError(response.error || "Login failed");
+			if (response.ok) {
+				localStorage.setItem("token", response.data);
+				navigate({ to: search.redirect || "/dashboard" });
+			} else {
+				setError(response.error || "Login failed");
+			}
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "Login failed");
 		}
 
 		setIsLoading(false);
-	};
+	});
 
 	return (
-		<Box maxW="md" mx="auto" mt={12}>
-			<Card.Root p={8}>
-				<VStack gap={6}>
-					<Heading size="lg" textAlign="center">
-						Welcome Back
-					</Heading>
-					<Text color="gray.600" textAlign="center">
-						Sign in to your account
-					</Text>
+		<Page>
+			<Label text="Welcome Back" size="large" />
 
-					{error && (
-						<Box
-							p={3}
-							bg="error.50"
-							borderColor="error.200"
-							borderWidth="1px"
-							borderRadius="md"
-							w="full"
-						>
-							<Text color="error.600">{error}</Text>
-						</Box>
-					)}
+			{error && <Card color="error">{error}</Card>}
 
-					<Box as="form" onSubmit={handleSubmit} w="full">
-						<VStack gap={4}>
-							<Field label="Username or Email" required>
-								<Input
-									type="text"
-									value={login}
-									onChange={(event) => setLogin(event.target.value)}
-									placeholder="Enter your username or email"
-								/>
-							</Field>
+			<Form onSubmit={onSubmit}>
+				<Input
+					required
+					width="large"
+					type="email"
+					placeholder="Email"
+					{...register("email")}
+				/>
+				<Input
+					required
+					width="large"
+					type="password"
+					placeholder="Password"
+					autoComplete="current-password"
+					{...register("password")}
+				/>
 
-							<Field label="Password" required>
-								<Input
-									type="password"
-									value={password}
-									onChange={(event) => setPassword(event.target.value)}
-									placeholder="Enter your password"
-								/>
-							</Field>
+				<Row css={{ marginTop: "$sm" }} />
 
-							<Button
-								type="submit"
-								colorScheme="primary"
-								size="lg"
-								w="full"
-								disabled={isLoading}
-							>
-								{isLoading ? "Signing In..." : "Sign In"}
-							</Button>
-						</VStack>
-					</Box>
+				<Button
+					type="submit"
+					width="large"
+					disabled={isLoading}
+					label={isLoading ? "Signing In..." : "Sign In"}
+				/>
+			</Form>
 
-					<Text fontSize="sm" color="gray.500" textAlign="center">
-						Don't have an account?{" "}
-						<ChakraLink asChild color="primary.500">
-							<Link to="/register">Sign up here</Link>
-						</ChakraLink>
-					</Text>
-				</VStack>
-			</Card.Root>
-		</Box>
+			<Label text="Don't have an account? ">
+				<Link
+					to="/register"
+					search={search.redirect ? { redirect: search.redirect } : {}}
+				>
+					<Label text="Sign up here" />
+				</Link>
+			</Label>
+		</Page>
 	);
 }
 
 export const Route = createFileRoute("/login")({
 	component: LoginPage,
+	validateSearch: (search: Record<string, unknown>): LoginSearch => ({
+		redirect: search.redirect as string,
+	}),
 });

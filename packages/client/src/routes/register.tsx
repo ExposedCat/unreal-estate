@@ -1,134 +1,105 @@
-import { Field } from "@/components/ui/field";
-import { post } from "@/services/requests";
+import { Page, Row } from "@/components/layout";
+import { Button, Card, Input, Label } from "@/components/ui";
+import { Form, useForm } from "@/components/ui/Form";
+import { useRedirectAuthorized } from "@/hooks";
+import { request } from "@/services/requests";
 import {
-	Box,
-	Button,
-	Card,
-	Link as ChakraLink,
-	Heading,
-	Input,
-	Text,
-	VStack,
-} from "@chakra-ui/react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
+	Link,
+	createFileRoute,
+	useNavigate,
+	useSearch,
+} from "@tanstack/react-router";
+import { RegisterRequestSchema } from "pronajemik-common";
 import { useState } from "react";
 
+type RegisterSearch = {
+	redirect?: string;
+};
+
 function RegisterPage() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
+	const { register, makeSubmit } = useForm(RegisterRequestSchema);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+	const search = useSearch({ from: "/register" });
 
-	const handleSubmit = async (event: React.FormEvent) => {
-		event.preventDefault();
+	useRedirectAuthorized({ redirect: search.redirect });
+
+	const onSubmit = makeSubmit(async (data) => {
 		setIsLoading(true);
 		setError("");
 
-		if (password !== confirmPassword) {
-			setError("Passwords do not match");
-			setIsLoading(false);
-			return;
-		}
+		try {
+			const response = await request("POST", "/register", { body: data });
 
-		if (password.length < 6) {
-			setError("Password must be at least 6 characters long");
-			setIsLoading(false);
-			return;
-		}
-
-		const response = await post("/register", { email, password });
-
-		if (response.ok) {
-			localStorage.setItem("token", response.data);
-			navigate({ to: "/" });
-		} else {
-			setError(response.error || "Registration failed");
+			if (response.ok) {
+				localStorage.setItem("token", response.data);
+				navigate({ to: search.redirect || "/dashboard" });
+			} else {
+				setError(response.error || "Registration failed");
+			}
+		} catch (error) {
+			setError(error instanceof Error ? error.message : "Registration failed");
 		}
 
 		setIsLoading(false);
-	};
+	});
 
 	return (
-		<Box maxW="md" mx="auto" mt={12}>
-			<Card.Root p={8}>
-				<VStack gap={6}>
-					<Heading size="lg" textAlign="center">
-						Create Account
-					</Heading>
-					<Text color="gray.600" textAlign="center">
-						Join us to find your perfect property
-					</Text>
+		<Page>
+			<Label text="Sign Up" size="large" />
+			<Label text="No ads. No emails. No bullshit." align="center" />
 
-					{error && (
-						<Box
-							p={3}
-							bg="error.50"
-							borderColor="error.200"
-							borderWidth="1px"
-							borderRadius="md"
-							w="full"
-						>
-							<Text color="error.600">{error}</Text>
-						</Box>
-					)}
+			{error && <Card color="error">{error}</Card>}
 
-					<Box as="form" onSubmit={handleSubmit} w="full">
-						<VStack gap={4}>
-							<Field label="Email" required>
-								<Input
-									type="email"
-									value={email}
-									onChange={(e) => setEmail(e.target.value)}
-									placeholder="Enter your email address"
-								/>
-							</Field>
+			<Form onSubmit={onSubmit}>
+				<Input
+					required
+					width="large"
+					type="email"
+					placeholder="Email"
+					{...register("email")}
+				/>
+				<Input
+					required
+					width="large"
+					type="password"
+					placeholder="Password"
+					autoComplete="new-password"
+					{...register("password")}
+				/>
 
-							<Field label="Password" required>
-								<Input
-									type="password"
-									value={password}
-									onChange={(e) => setPassword(e.target.value)}
-									placeholder="Create a password"
-									minLength={6}
-								/>
-							</Field>
+				<Row css={{ marginTop: "$sm" }}>
+					<Label
+						text="By proceeding, you agree to our Terms of Service and Privacy Policy."
+						size="small"
+						align="center"
+					/>
+				</Row>
 
-							<Field label="Confirm Password" required>
-								<Input
-									type="password"
-									value={confirmPassword}
-									onChange={(e) => setConfirmPassword(e.target.value)}
-									placeholder="Confirm your password"
-								/>
-							</Field>
+				<Button
+					type="submit"
+					width="large"
+					disabled={isLoading}
+					label={isLoading ? "Signing Up..." : "Sign Up"}
+				/>
+			</Form>
 
-							<Button
-								type="submit"
-								colorScheme="primary"
-								size="lg"
-								w="full"
-								disabled={isLoading}
-							>
-								{isLoading ? "Creating Account..." : "Create Account"}
-							</Button>
-						</VStack>
-					</Box>
-
-					<Text fontSize="sm" color="gray.500" textAlign="center">
-						Already have an account?{" "}
-						<ChakraLink asChild color="primary.500">
-							<Link to="/login">Sign in here</Link>
-						</ChakraLink>
-					</Text>
-				</VStack>
-			</Card.Root>
-		</Box>
+			<Label text="Already have an account? ">
+				<Link
+					to="/login"
+					search={search.redirect ? { redirect: search.redirect } : {}}
+				>
+					<Label text="Sign in here" />
+				</Link>
+			</Label>
+		</Page>
 	);
 }
 
 export const Route = createFileRoute("/register")({
 	component: RegisterPage,
+	validateSearch: (search: Record<string, unknown>): RegisterSearch => ({
+		redirect: search.redirect as string,
+	}),
 });
