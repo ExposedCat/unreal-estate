@@ -1,9 +1,9 @@
 import { ObjectId } from "mongodb";
-import type { Estate, ServiceResponse } from "pronajemik-common";
+import type { Estate, ServiceResponse, WithId } from "pronajemik-common";
 import { failure, success } from "pronajemik-common";
 import type { Database } from "../database";
 
-const SEARCH_PAGE_SIZE = 3;
+const SEARCH_PAGE_SIZE = 20;
 
 export type GetEstateArgs = {
 	database: Database;
@@ -13,14 +13,18 @@ export type GetEstateArgs = {
 export async function getEstate({
 	database,
 	estateId,
-}: GetEstateArgs): Promise<ServiceResponse<Estate>> {
+}: GetEstateArgs): Promise<ServiceResponse<WithId<Estate>>> {
 	const estate = await database.estates.findOne({
 		_id: new ObjectId(estateId),
 	});
 	if (!estate) {
 		return failure("Estate not found");
 	}
-	return success(estate);
+	const { _id, ...data } = estate;
+	return success({
+		id: _id.toString(),
+		...data,
+	});
 }
 
 export type SearchEstatesArgs = {
@@ -33,7 +37,7 @@ export async function searchEstates({
 	page = 1,
 }: SearchEstatesArgs): Promise<
 	ServiceResponse<{
-		entries: Estate[];
+		entries: WithId<Estate>[];
 		totalPages: number;
 	}>
 > {
@@ -44,6 +48,7 @@ export async function searchEstates({
 					entries: [
 						{ $skip: (page - 1) * SEARCH_PAGE_SIZE },
 						{ $limit: SEARCH_PAGE_SIZE },
+						{ $addFields: { id: "$_id" } },
 					],
 					totalPages: [
 						{ $count: "count" },

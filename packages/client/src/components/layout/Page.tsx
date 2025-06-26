@@ -13,7 +13,7 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({
 		<Column
 			css={{
 				width: "$full",
-				height: "$full",
+				minHeight: "$full",
 				background: "$bg-canvas",
 				justifyContent: align === "center" ? "center" : "flex-start",
 			}}
@@ -21,6 +21,7 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({
 			<Column
 				css={{
 					width: "$full",
+					height: "$full",
 					padding: "$sm",
 					gap: "$md",
 					maxWidth: "$maxView",

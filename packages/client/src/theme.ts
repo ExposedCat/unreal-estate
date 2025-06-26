@@ -5,7 +5,7 @@ export const applyGlobalStyles = globalCss({
 		boxSizing: "border-box",
 		margin: 0,
 		padding: 0,
-		fontFamily: "Raleway, sans-serif",
+		fontFamily: "IBM Plex Sans, Raleway, sans-serif",
 	},
 	"html,body,#root": {
 		width: "100%",
@@ -52,6 +52,7 @@ export const { styled, css, createTheme } = createStitches({
 		radii: {
 			none: "0",
 			basic: "0.5rem",
+			inner: "0.3rem",
 			full: "50rem",
 		},
 		borderWidths: {
@@ -62,6 +63,7 @@ export const { styled, css, createTheme } = createStitches({
 		fontSizes: {
 			small: "0.9rem",
 			normal: "1rem",
+			large: "2rem",
 			header: "3rem",
 		},
 		fontWeights: {

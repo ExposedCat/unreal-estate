@@ -4,6 +4,7 @@ import { Column } from "../layout/index";
 export const Card = styled(Column, {
 	borderRadius: "$basic",
 	borderWidth: "$thin",
+	borderBottomWidth: "$thick",
 	borderStyle: "solid",
 	padding: "$sm",
 	gap: "$sm",
@@ -36,8 +37,23 @@ export const Card = styled(Column, {
 				borderColor: "$status-error",
 			},
 		},
+		flat: {
+			true: {
+				borderBottomWidth: "$thin",
+			},
+		},
+		direction: {
+			row: {
+				flexDirection: "row",
+			},
+			column: {
+				flexDirection: "column",
+			},
+		},
 	},
 	defaultVariants: {
 		color: "default",
+		flat: false,
+		direction: "column",
 	},
 });

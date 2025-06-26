@@ -19,15 +19,17 @@ export async function insertEstate({
 }
 
 export const formatParserOutput = (output: ParsedEstate): Estate => ({
-	url: output.url,
-	rentBase: output.rent_base,
-	fees: output.fees_base,
-	rent2Person: output.rent_2_person,
-	fees2Person: output.fees_2_person,
-	rkPaid: output.is_provision_RK_paid,
-	rkPrice: output.provision_RK_price,
-	depositPaid: output.is_deposit_paid,
-	depositPrice: output.deposit_price,
-	electricityPaid: output.is_electricity_paid,
-	electricityPrice: output.electricity_price,
+	...output,
+	price: {
+		rentBase: output.price.rent_base ?? 0,
+		fees: output.price.fees_base ?? 0,
+		rent2Person: output.price.rent_2_person ?? 0,
+		fees2Person: output.price.fees_2_person ?? 0,
+		rkPaid: output.price.is_provision_RK_paid ?? false,
+		rkPrice: output.price.provision_RK_price,
+		depositPaid: output.price.is_deposit_paid ?? false,
+		depositPrice: output.price.deposit_price,
+		electricityPaid: output.price.is_electricity_paid ?? false,
+		electricityPrice: output.price.electricity_price,
+	},
 });

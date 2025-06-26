@@ -6,6 +6,7 @@ export * from "./schemas/routes/login.post";
 export * from "./schemas/routes/register.post";
 export * from "./schemas/routes/estates.get";
 export * from "./schemas/routes/estates.post";
+export * from "./schemas/routes/estate.get";
 export * from "./schemas/routes/session.get";
 
 export * from "./schemas/common";

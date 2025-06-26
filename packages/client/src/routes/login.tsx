@@ -1,5 +1,5 @@
 import { Page, Row } from "@/components/layout";
-import { Button, Card, Input, Label } from "@/components/ui";
+import { Alert, Button, Input, Label } from "@/components/ui";
 import { Form, useForm } from "@/components/ui/Form";
 import { useRedirectAuthorized } from "@/hooks";
 import { request } from "@/services/requests";
@@ -47,9 +47,9 @@ function LoginPage() {
 
 	return (
 		<Page>
-			<Label text="Welcome Back" size="large" />
+			<Label text="Welcome Back" size="header" />
 
-			{error && <Card color="error">{error}</Card>}
+			{error && <Alert color="error" label={error} />}
 
 			<Form onSubmit={onSubmit}>
 				<Input

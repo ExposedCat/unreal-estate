@@ -1,42 +1,8 @@
 import type { Static, TSchema } from "@sinclair/typebox";
 import { Value } from "@sinclair/typebox/value";
-import {
-	Estates_Get_Params_Schema,
-	Estates_Get_Response_Schema,
-	Login_Post_Body_Schema,
-	Login_Post_Response_Schema,
-	Register_Post_Body_Schema,
-	Register_Post_Response_Schema,
-	Session_Get_Response_Schema,
-} from "pronajemik-common";
+import { ApiSchemas } from "./api";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
-
-export const ApiSchemas = {
-	"/login": {
-		POST: {
-			body: Login_Post_Body_Schema,
-			response: Login_Post_Response_Schema,
-		},
-	},
-	"/register": {
-		POST: {
-			body: Register_Post_Body_Schema,
-			response: Register_Post_Response_Schema,
-		},
-	},
-	"/session": {
-		GET: {
-			response: Session_Get_Response_Schema,
-		},
-	},
-	"/estates": {
-		GET: {
-			params: Estates_Get_Params_Schema,
-			response: Estates_Get_Response_Schema,
-		},
-	},
-} as const;
 
 export type ApiEndpoints = keyof typeof ApiSchemas;
 export type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";

@@ -1,5 +1,5 @@
 import { Page, Row } from "@/components/layout";
-import { Button, Card, Input, Label } from "@/components/ui";
+import { Alert, Button, Input, Label } from "@/components/ui";
 import { Form, useForm } from "@/components/ui/Form";
 import { useRedirectAuthorized } from "@/hooks";
 import { request } from "@/services/requests";
@@ -47,10 +47,10 @@ function RegisterPage() {
 
 	return (
 		<Page>
-			<Label text="Sign Up" size="large" />
+			<Label text="Sign Up" size="header" />
 			<Label text="No ads. No emails. No bullshit." align="center" />
 
-			{error && <Card color="error">{error}</Card>}
+			{error && <Alert color="error" label={error} />}
 
 			<Form onSubmit={onSubmit}>
 				<Input

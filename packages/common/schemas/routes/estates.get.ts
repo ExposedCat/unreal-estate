@@ -1,12 +1,12 @@
 import { type Static, Type } from "@sinclair/typebox";
-import { WithError } from "../common";
+import { WithError, WithIdSchema } from "../common";
 import { EstateSchema } from "../entities/estate";
 
 export const Estates_Get_Response_Schema = WithError(
 	Type.Object({
 		page: Type.Number(),
 		totalPages: Type.Number(),
-		entries: Type.Array(EstateSchema),
+		entries: Type.Array(WithIdSchema(EstateSchema)),
 	}),
 );
 export type Estates_Get_Response = Static<typeof Estates_Get_Response_Schema>;

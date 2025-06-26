@@ -9,7 +9,7 @@ function DashboardPage() {
 
 	return (
 		<Page>
-			<Label text="Dashboard" size="large" />
+			<Label text="Dashboard" size="header" />
 			<Label text="Welcome to your protected dashboard!" />
 			<Row gap="sm">
 				<Button label="Logout" onClick={logout} />
