@@ -13,7 +13,7 @@ function DashboardPage() {
 			<Label text="Welcome to your protected dashboard!" />
 			<Row gap="sm">
 				<Button label="Logout" onClick={logout} />
-				<Link to="/search">
+				<Link to="/estates">
 					<Button label="Search" />
 				</Link>
 			</Row>

@@ -12,9 +12,19 @@ const StyledInput = styled("button", {
 	paddingInline: "$md",
 	paddingBlock: "$sm",
 	backgroundColor: "$bg-surface",
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
 	variants: {
+		icon: {
+			true: {
+				width: "$xxs",
+				height: "calc($xxs + $borderWidths$thin)",
+				padding: "$xs",
+			},
+		},
 		width: {
-			normal: { width: "auto" },
+			normal: {},
 			large: { width: "$md" },
 			full: { width: "$full" },
 		},
@@ -37,18 +47,21 @@ const StyledInput = styled("button", {
 });
 
 type ButtonProps = ComponentProps<typeof StyledInput> & {
-	label: string;
+	label?: string;
+	contents?: React.ReactNode;
 };
 
 export const Button: React.FC<ButtonProps> = ({
 	label,
+	contents,
 	onClick,
 	disabled,
 	...props
 }) => {
 	return (
 		<StyledInput onClick={disabled ? undefined : onClick} {...props}>
-			<Label text={label} />
+			{label && <Label text={label} />}
+			{contents}
 		</StyledInput>
 	);
 };

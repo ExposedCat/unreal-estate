@@ -1,9 +1,10 @@
+import { BackIcon } from "@/components/icons";
 import { Page, Row } from "@/components/layout";
 import { EstateCard } from "@/components/partials/EstateCard";
-import { Alert, Label } from "@/components/ui";
+import { Alert, Button, Label } from "@/components/ui";
 import { useRequest } from "@/hooks";
 import { requireAuth } from "@/utils";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 function SearchPage() {
 	const { isLoading, isError, isSuccess, data, error } = useRequest(
@@ -16,7 +17,12 @@ function SearchPage() {
 
 	return (
 		<Page align="start">
-			<Label text="Search Apartments" size="header" />
+			<Row gap="md">
+				<Link to="/dashboard">
+					<Button icon contents={<BackIcon />} />
+				</Link>
+				<Label text="Search Apartments" size="large" />
+			</Row>
 
 			{isLoading && <Alert color="warning" label="Loading..." />}
 			{isError && (
@@ -33,7 +39,7 @@ function SearchPage() {
 	);
 }
 
-export const Route = createFileRoute("/search")({
+export const Route = createFileRoute("/estates/")({
 	beforeLoad: requireAuth,
 	component: SearchPage,
 });

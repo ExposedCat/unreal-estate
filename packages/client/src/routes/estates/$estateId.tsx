@@ -1,28 +1,32 @@
+import { BackIcon } from "@/components/icons";
 import { Column, Page, Row } from "@/components/layout";
-import { Alert, Card, Label } from "@/components/ui";
+import { Alert, Button, Card, Label } from "@/components/ui";
 import { useRequest } from "@/hooks";
-import { createFileRoute, useParams } from "@tanstack/react-router";
+import { Link, createFileRoute, useParams } from "@tanstack/react-router";
 
 function EstateIdPage() {
 	const { estateId } = useParams({ from: "/estates/$estateId" });
 	const { isLoading, isError, isSuccess, error, data } = useRequest(
 		"GET",
 		"/estate",
-		{
-			params: { estateId },
-		},
+		{ params: { estateId } },
 	);
 
 	return (
-		<Page>
+		<Page color="alternative">
 			{isLoading && <Alert color="warning" label="Loading..." />}
 			{isError && <Alert color="error" label={error} />}
 			{isSuccess && (
 				<>
-					<Label
-						text={`${data.address.street} ${data.layout.rooms}${data.layout.kitchenCorner ? "+kk" : "+1"} ${data.area} m²`}
-						size="large"
-					/>
+					<Row gap="md">
+						<Link to="/estates">
+							<Button icon contents={<BackIcon />} />
+						</Link>
+						<Label
+							text={`${data.address.street} ${data.layout.rooms}${data.layout.kitchenCorner ? "+kk" : "+1"} ${data.area} m²`}
+							size="large"
+						/>
+					</Row>
 					<Card direction="row" gap="lg" justify="separated">
 						<Row>
 							<Column>

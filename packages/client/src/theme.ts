@@ -12,6 +12,10 @@ export const applyGlobalStyles = globalCss({
 		height: "100%",
 		fontSize: "16px",
 	},
+	".icon": {
+		width: "18px",
+		height: "18px",
+	},
 });
 
 export const { styled, css, createTheme } = createStitches({
@@ -24,6 +28,7 @@ export const { styled, css, createTheme } = createStitches({
 			"text-inverse": "#ffffff",
 			"text-muted": "#6b7280",
 			"bg-canvas": "#B6D9FF",
+			"bg-canvas-2": "#fff48d",
 			"bg-surface": "#ffffff",
 			"bg-muted": "#f3f4f6",
 			"border-default": "#1d1c1c",
@@ -43,6 +48,7 @@ export const { styled, css, createTheme } = createStitches({
 		},
 		sizes: {
 			full: "100%",
+			xxs: "2rem",
 			xs: "10rem",
 			sm: "20rem",
 			md: "30rem",

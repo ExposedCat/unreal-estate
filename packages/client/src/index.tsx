@@ -2,6 +2,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
+import { IconContext } from "react-icons/lib";
 import { QueryProvider } from "./providers/QueryProvider";
 import { routeTree } from "./routeTree.gen";
 import { applyGlobalStyles } from "./theme";
@@ -27,7 +28,9 @@ applyGlobalStyles();
 createRoot(root).render(
 	<StrictMode>
 		<QueryProvider>
-			<RouterProvider router={router} />
+			<IconContext.Provider value={{ className: "icon" }}>
+				<RouterProvider router={router} />
+			</IconContext.Provider>
 		</QueryProvider>
 	</StrictMode>,
 );

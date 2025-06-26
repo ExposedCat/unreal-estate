@@ -2,11 +2,13 @@ import type React from "react";
 import { Column } from "./Flex";
 
 export type PageProps = {
+	color?: "main" | "alternative";
 	align?: "center" | "start";
 };
 
 export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({
 	children,
+	color = "main",
 	align = "center",
 }) => {
 	return (
@@ -14,7 +16,7 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({
 			css={{
 				width: "$full",
 				minHeight: "$full",
-				background: "$bg-canvas",
+				background: color === "main" ? "$bg-canvas" : "$bg-canvas-2",
 				justifyContent: align === "center" ? "center" : "flex-start",
 			}}
 		>
