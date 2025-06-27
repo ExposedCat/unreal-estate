@@ -13,6 +13,7 @@ const StyledInput = styled("button", {
 	paddingBlock: "$sm",
 	backgroundColor: "$bg-surface",
 	display: "flex",
+	gap: "$sm",
 	alignItems: "center",
 	justifyContent: "center",
 	variants: {

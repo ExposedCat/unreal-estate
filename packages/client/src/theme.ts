@@ -16,6 +16,10 @@ export const applyGlobalStyles = globalCss({
 		width: "18px",
 		height: "18px",
 	},
+	a: {
+		textDecoration: "none",
+		color: "$text-primary",
+	},
 });
 
 export const { styled, css, createTheme } = createStitches({

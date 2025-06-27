@@ -18,7 +18,7 @@ export const EstateCard: React.FC<EstateCardProps> = ({ estate }) => {
 						padding: 0,
 						minWidth: "$sm",
 						minHeight: "$xs",
-						maxWidth: "$sm",
+						width: "$full",
 					}}
 				>
 					<Image src={estate.images.at(0)} alt="Estate preview" style="cover" />

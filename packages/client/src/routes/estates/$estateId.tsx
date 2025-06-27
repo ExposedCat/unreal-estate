@@ -20,7 +20,14 @@ function EstateIdPage() {
 				<>
 					<Row gap="md">
 						<Link to="/estates">
-							<Button icon contents={<BackIcon />} />
+							<Button
+								contents={
+									<>
+										<BackIcon />
+										<Label text="Search" />
+									</>
+								}
+							/>
 						</Link>
 						<Label
 							text={`${data.address.street} ${data.layout.rooms}${data.layout.kitchenCorner ? "+kk" : "+1"} ${data.area} m²`}

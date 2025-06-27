@@ -2,12 +2,18 @@ import type React from "react";
 import { Column } from "./Flex";
 
 export type PageProps = {
+	full?: boolean;
+	screen?: boolean;
+	paddingLess?: boolean;
 	color?: "main" | "alternative";
 	align?: "center" | "start";
 };
 
 export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({
 	children,
+	full = false,
+	screen = false,
+	paddingLess = false,
 	color = "main",
 	align = "center",
 }) => {
@@ -15,7 +21,7 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({
 		<Column
 			css={{
 				width: "$full",
-				minHeight: "$full",
+				minHeight: screen ? "100vh" : "$full",
 				background: color === "main" ? "$bg-canvas" : "$bg-canvas-2",
 				justifyContent: align === "center" ? "center" : "flex-start",
 			}}
@@ -23,10 +29,12 @@ export const Page: React.FC<React.PropsWithChildren<PageProps>> = ({
 			<Column
 				css={{
 					width: "$full",
-					height: "$full",
+					height: screen ? "100vh" : "$full",
 					padding: "$sm",
+					paddingInline: paddingLess ? 0 : "$sm",
+					paddingBottom: paddingLess ? 0 : "$sm",
 					gap: "$md",
-					maxWidth: "$maxView",
+					maxWidth: full ? undefined : "$maxView",
 				}}
 			>
 				{children}

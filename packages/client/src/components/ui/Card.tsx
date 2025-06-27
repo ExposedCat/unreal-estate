@@ -50,6 +50,11 @@ export const Card = styled(Column, {
 				flexDirection: "column",
 			},
 		},
+		borderless: {
+			true: {
+				borderBottomWidth: "$thin",
+			},
+		},
 	},
 	defaultVariants: {
 		color: "default",

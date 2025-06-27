@@ -13,6 +13,7 @@ const Flex = styled("div", {
 			center: { alignItems: "center" },
 			end: { alignItems: "flex-end" },
 			stretch: { alignItems: "stretch" },
+			unset: { alignItems: "unset" },
 		},
 		justify: {
 			start: { justifyContent: "flex-start" },
@@ -20,6 +21,7 @@ const Flex = styled("div", {
 			end: { justifyContent: "flex-end" },
 			evenly: { justifyContent: "space-evenly" },
 			separated: { justifyContent: "space-between" },
+			unset: { justifyContent: "unset" },
 		},
 		gap: {
 			none: { gap: "0" },
@@ -31,7 +33,12 @@ const Flex = styled("div", {
 		},
 		full: {
 			true: { width: "$full", height: "$full" },
-			false: {},
+		},
+		wrap: {
+			true: { flexWrap: "wrap" },
+		},
+		grow: {
+			true: { flexGrow: 1 },
 		},
 	},
 	defaultVariants: {

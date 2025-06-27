@@ -22,6 +22,7 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
 		"@tanstack/router-cli": "^1.121.27",
+		"@types/leaflet": "^1.9.19",
 		"husky": "^9.0.11"
 	},
 	"overrides": {

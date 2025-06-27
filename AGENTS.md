@@ -1,18 +1,14 @@
-# Project
-Webapp for real estate agents and rent seekers. Outstanding feature is that there are lots of very strict and precise filters allowing users to easily find the perfect property.
-
 # Tech Stack
 - React.js
 - Elysia.js
 - Bun.js
 - Vite
 - TypeScript
-- Chakra UI
+- React Stitches
 - MongoDB
-- Biome.js
 
 # Instructions
-- Before each step, read AGENTS.md file and start your message with "I read and will comply with the AGENTS.md instructions after every step"
+- Before editing a file, always, ALWAYS read it's most recent actual version!
 - When you are asked a question, provide a precise answer, don't jump into conclusions
 - Always write mindful, secure, scalable and production-ready code
 - Always follow project guidelines
