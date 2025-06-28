@@ -5,7 +5,7 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/")({
 	component: () => (
 		<Page>
-			<Label text="Find Your Perfect Property" size="large" />
+			<Label text="Find Your Perfect Property" size="header" />
 			<Column css={{ maxWidth: "$lg" }}>
 				<Label
 					text="Discover the best real estate deals with our advanced filtering system. Whether you're buying or renting, we help you find exactly what you're looking for."

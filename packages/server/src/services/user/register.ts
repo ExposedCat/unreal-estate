@@ -1,10 +1,10 @@
-import type { RegisterRequest, ServiceResponse } from "pronajemik-common";
+import type { Register_Post_Body, ServiceResponse } from "pronajemik-common";
 import { failure, success } from "pronajemik-common";
 import type { Database } from "../database";
 
 export type RegisterUserArgs = {
 	database: Database;
-} & RegisterRequest;
+} & Register_Post_Body;
 
 export async function registerUser(
 	args: RegisterUserArgs,

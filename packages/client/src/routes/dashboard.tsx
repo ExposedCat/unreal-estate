@@ -1,17 +1,22 @@
-import { Page } from "@/components/layout";
+import { Page, Row } from "@/components/layout";
 import { Button, Label } from "@/components/ui";
 import { useSession } from "@/hooks";
 import { requireAuth } from "@/utils";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 
 function DashboardPage() {
 	const { logout } = useSession();
 
 	return (
 		<Page>
-			<Label text="Dashboard" size="large" />
+			<Label text="Dashboard" size="header" />
 			<Label text="Welcome to your protected dashboard!" />
-			<Button label="Logout" onClick={logout} />
+			<Row gap="sm">
+				<Button label="Logout" onClick={logout} />
+				<Link to="/estates">
+					<Button label="Search" />
+				</Link>
+			</Row>
 		</Page>
 	);
 }

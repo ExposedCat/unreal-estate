@@ -1,15 +1,11 @@
 import { useRequest } from "@/hooks/useRequest";
 import { useNavigate } from "@tanstack/react-router";
-import { SessionResponseSchema } from "pronajemik-common";
 import { useCallback } from "react";
 
 export function useSession() {
 	const navigate = useNavigate();
 
-	const { data: sessionResponse } = useRequest("GET", "/session", {
-		responseSchema: SessionResponseSchema,
-		enabled: !!localStorage.getItem("token"),
-	});
+	const { isSuccess, data: sessionData } = useRequest("GET", "/session");
 
 	const logout = useCallback(() => {
 		localStorage.removeItem("token");
@@ -17,7 +13,8 @@ export function useSession() {
 	}, [navigate]);
 
 	return {
-		data: sessionResponse?.ok ? sessionResponse : null,
+		isAuthorized: isSuccess,
+		data: sessionData ?? null,
 		logout,
 	};
 }

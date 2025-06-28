@@ -1,5 +1,5 @@
 import { Page, Row } from "@/components/layout";
-import { Button, Card, Input, Label } from "@/components/ui";
+import { Alert, Button, Input, Label } from "@/components/ui";
 import { Form, useForm } from "@/components/ui/Form";
 import { useRedirectAuthorized } from "@/hooks";
 import { request } from "@/services/requests";
@@ -9,7 +9,7 @@ import {
 	useNavigate,
 	useSearch,
 } from "@tanstack/react-router";
-import { RegisterRequestSchema } from "pronajemik-common";
+import { Register_Post_Body_Schema } from "pronajemik-common";
 import { useState } from "react";
 
 type RegisterSearch = {
@@ -17,7 +17,7 @@ type RegisterSearch = {
 };
 
 function RegisterPage() {
-	const { register, makeSubmit } = useForm(RegisterRequestSchema);
+	const { register, makeSubmit } = useForm(Register_Post_Body_Schema);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
@@ -47,10 +47,10 @@ function RegisterPage() {
 
 	return (
 		<Page>
-			<Label text="Sign Up" size="large" />
+			<Label text="Sign Up" size="header" />
 			<Label text="No ads. No emails. No bullshit." align="center" />
 
-			{error && <Card color="error">{error}</Card>}
+			{error && <Alert color="error" label={error} />}
 
 			<Form onSubmit={onSubmit}>
 				<Input

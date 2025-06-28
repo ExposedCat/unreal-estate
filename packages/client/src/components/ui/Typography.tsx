@@ -15,9 +15,15 @@ const StyledLabel = styled("span", {
 				color: "$black",
 			},
 			large: {
+				fontSize: "$large",
+				fontWeight: "$bold",
+				color: "$black",
+			},
+			header: {
 				fontSize: "$header",
 				fontWeight: "$bold",
 				color: "$black",
+				fontFamily: "Raleway",
 			},
 		},
 		color: {
@@ -26,6 +32,15 @@ const StyledLabel = styled("span", {
 			},
 			inverse: {
 				color: "$text-inverse",
+			},
+		},
+		weight: {
+			unset: {},
+			normal: {
+				fontWeight: "$normal",
+			},
+			bold: {
+				fontWeight: "$bold",
 			},
 		},
 		align: {
@@ -39,11 +54,21 @@ const StyledLabel = styled("span", {
 				textAlign: "right",
 			},
 		},
+		noWrap: {
+			true: {
+				whiteSpace: "nowrap",
+			},
+			false: {
+				whiteSpace: "normal",
+			},
+		},
 	},
 	defaultVariants: {
 		size: "normal",
 		color: "primary",
 		align: "left",
+		weight: "unset",
+		noWrap: false,
 	},
 });
 

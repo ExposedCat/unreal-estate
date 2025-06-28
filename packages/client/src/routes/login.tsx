@@ -1,5 +1,5 @@
 import { Page, Row } from "@/components/layout";
-import { Button, Card, Input, Label } from "@/components/ui";
+import { Alert, Button, Input, Label } from "@/components/ui";
 import { Form, useForm } from "@/components/ui/Form";
 import { useRedirectAuthorized } from "@/hooks";
 import { request } from "@/services/requests";
@@ -9,7 +9,7 @@ import {
 	useNavigate,
 	useSearch,
 } from "@tanstack/react-router";
-import { LoginRequestSchema } from "pronajemik-common";
+import { Login_Post_Body_Schema } from "pronajemik-common";
 import { useState } from "react";
 
 type LoginSearch = {
@@ -17,7 +17,7 @@ type LoginSearch = {
 };
 
 function LoginPage() {
-	const { register, makeSubmit } = useForm(LoginRequestSchema);
+	const { register, makeSubmit } = useForm(Login_Post_Body_Schema);
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
@@ -47,9 +47,9 @@ function LoginPage() {
 
 	return (
 		<Page>
-			<Label text="Welcome Back" size="large" />
+			<Label text="Welcome Back" size="header" />
 
-			{error && <Card color="error">{error}</Card>}
+			{error && <Alert color="error" label={error} />}
 
 			<Form onSubmit={onSubmit}>
 				<Input

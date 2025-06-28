@@ -1,21 +1,34 @@
 import { type Static, Type } from "@sinclair/typebox";
 
 export const EstateSchema = Type.Object({
-	rentBase: Type.Union([Type.Number(), Type.Null()]),
-	fees: Type.Union([Type.Number(), Type.Null()]),
-	rent2Person: Type.Union([Type.Number(), Type.Null()]),
-	fees2Person: Type.Union([Type.Number(), Type.Null()]),
-	rkPaid: Type.Union([Type.Boolean(), Type.Null()]),
-	rkPrice: Type.Union([Type.Number(), Type.Null()]),
-	depositPaid: Type.Union([Type.Boolean(), Type.Null()]),
-	depositPrice: Type.Union([Type.Number(), Type.Null()]),
-	electricityPaid: Type.Union([Type.Boolean(), Type.Null()]),
-	electricityPrice: Type.Union([Type.Number(), Type.Null()]),
-	url: Type.Union([Type.String(), Type.Null()]),
+	images: Type.Array(Type.String()),
+	area: Type.Number(),
+	address: Type.Object({
+		street: Type.String(),
+		city: Type.String(),
+		district: Type.Optional(Type.String()),
+	}),
+	layout: Type.Object({
+		rooms: Type.Number(),
+		kitchenCorner: Type.Boolean(),
+	}),
+	price: Type.Object({
+		rentBase: Type.Number(),
+		fees: Type.Number(),
+		rent2Person: Type.Number(),
+		fees2Person: Type.Number(),
+		rkPaid: Type.Boolean(),
+		rkPrice: Type.Union([Type.Number(), Type.Null()]),
+		depositPaid: Type.Boolean(),
+		depositPrice: Type.Union([Type.Number(), Type.Null()]),
+		electricityPaid: Type.Boolean(),
+		electricityPrice: Type.Union([Type.Number(), Type.Null()]),
+	}),
+	url: Type.Optional(Type.String()),
 });
 export type Estate = Static<typeof EstateSchema>;
 
-export const ParsedEstateSchema = Type.Object({
+export const ParsedPriceSchema = Type.Object({
 	url: Type.Union([Type.String(), Type.Null()]),
 	rent_base: Type.Union([Type.Number(), Type.Null()]),
 	fees_base: Type.Union([Type.Number(), Type.Null()]),
@@ -28,4 +41,12 @@ export const ParsedEstateSchema = Type.Object({
 	is_electricity_paid: Type.Union([Type.Boolean(), Type.Null()]), // FIXME: Legacy field name!
 	electricity_price: Type.Union([Type.Number(), Type.Null()]),
 });
+export type ParsedPrice = Static<typeof ParsedPriceSchema>;
+
+export const ParsedEstateSchema = Type.Intersect([
+	Type.Omit(EstateSchema, Type.Literal("price")),
+	Type.Object({
+		price: ParsedPriceSchema,
+	}),
+]);
 export type ParsedEstate = Static<typeof ParsedEstateSchema>;

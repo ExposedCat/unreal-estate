@@ -26,3 +26,17 @@ export const ErrorResponseSchema = Type.Object({
 });
 
 export type ErrorResponse = Static<typeof ErrorResponseSchema>;
+
+export const WithError = <T extends TSchema>(schema: T) =>
+	Type.Union([SuccessResponseSchema(schema), ErrorResponseSchema]);
+
+export const IdSchema = Type.Object({
+	id: Type.String(),
+});
+
+export type Id = Static<typeof IdSchema>;
+
+export const WithIdSchema = <T extends TSchema>(schema: T) =>
+	Type.Intersect([schema, IdSchema]);
+
+export type WithId<T> = T & Id;

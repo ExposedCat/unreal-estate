@@ -4,6 +4,7 @@ import { Column } from "../layout/index";
 export const Card = styled(Column, {
 	borderRadius: "$basic",
 	borderWidth: "$thin",
+	borderBottomWidth: "$thick",
 	borderStyle: "solid",
 	padding: "$sm",
 	gap: "$sm",
@@ -17,17 +18,17 @@ export const Card = styled(Column, {
 			},
 			info: {
 				fontWeight: "$bold",
-				background: "color-mix(in oklab, $status-info, white 10%)",
+				background: "color-mix(in oklab, $status-info, white 50%)",
 				borderColor: "$status-info",
 			},
 			success: {
 				fontWeight: "$bold",
-				background: "color-mix(in oklab, $status-success, white 10%)",
+				background: "color-mix(in oklab, $status-success, white 50%)",
 				borderColor: "$status-success",
 			},
 			warning: {
 				fontWeight: "$bold",
-				background: "color-mix(in oklab, $status-warning, white 10%)",
+				background: "color-mix(in oklab, $status-warning, white 50%)",
 				borderColor: "$status-warning",
 			},
 			error: {
@@ -36,8 +37,28 @@ export const Card = styled(Column, {
 				borderColor: "$status-error",
 			},
 		},
+		flat: {
+			true: {
+				borderBottomWidth: "$thin",
+			},
+		},
+		direction: {
+			row: {
+				flexDirection: "row",
+			},
+			column: {
+				flexDirection: "column",
+			},
+		},
+		borderless: {
+			true: {
+				borderBottomWidth: "$thin",
+			},
+		},
 	},
 	defaultVariants: {
 		color: "default",
+		flat: false,
+		direction: "column",
 	},
 });

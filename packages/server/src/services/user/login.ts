@@ -1,10 +1,10 @@
-import type { LoginRequest, ServiceResponse } from "pronajemik-common";
+import type { Login_Post_Body, ServiceResponse } from "pronajemik-common";
 import { failure, success } from "pronajemik-common";
 import type { Database } from "../database";
 
 export type LoginUserArgs = {
 	database: Database;
-} & LoginRequest;
+} & Login_Post_Body;
 
 export async function loginUser(
 	args: LoginUserArgs,

@@ -1,15 +1,18 @@
 import { Elysia } from "elysia";
-import { EstateRequestSchema, type EstateResponse } from "pronajemik-common";
+import {
+	Estates_Post_Body_Schema,
+	type Estates_Post_Response,
+} from "pronajemik-common";
 
 import { success } from "pronajemik-common";
 import { RequireAuth } from "../middlewares/auth";
 import { formatParserOutput, insertEstate } from "../services/estate/insert";
 
-export const EstateRoute = new Elysia({ name: "Route.Estate" })
+export const POST_EstatesRoute = new Elysia({ name: "Route.PostEstates" })
 	.use(RequireAuth)
 	.post(
-		"/estate",
-		async ({ body, database }): Promise<EstateResponse> => {
+		"/estates",
+		async ({ body, database }): Promise<Estates_Post_Response> => {
 			const estateData =
 				body.kind === "manual" ? body.data : formatParserOutput(body.data);
 			const result = await insertEstate({ database, estate: estateData });
@@ -18,5 +21,5 @@ export const EstateRoute = new Elysia({ name: "Route.Estate" })
 			}
 			return success(null);
 		},
-		{ body: EstateRequestSchema },
+		{ body: Estates_Post_Body_Schema },
 	);

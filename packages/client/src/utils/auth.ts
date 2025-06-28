@@ -6,7 +6,6 @@ export async function requireAuth() {
 		const response = await request("GET", "/session");
 
 		if (!response.ok) {
-			localStorage.removeItem("token");
 			throw redirect({
 				to: "/login",
 				search: {
@@ -21,7 +20,6 @@ export async function requireAuth() {
 			throw error;
 		}
 
-		localStorage.removeItem("token");
 		throw redirect({
 			to: "/login",
 			search: {
